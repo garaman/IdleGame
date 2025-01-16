@@ -35,7 +35,7 @@ public class ObjectPool : IPool
     public void Return(GameObject obj, Action<GameObject> action = null)
     {
         pool.Enqueue(obj);
-        obj.transform.parent = parentTransform;
+        obj.transform.SetParent(parentTransform);
         obj.SetActive(false);
 
         if(action != null)
@@ -86,7 +86,7 @@ public class PoolManager
     private void Add_Queue(string path)
     {
         var go = BaseManager.instance.Instantiate_Path(path);
-        go.transform.parent = m_pool_Dictionary[path].parentTransform;
+        go.transform.SetParent(m_pool_Dictionary[path].parentTransform);
 
         m_pool_Dictionary[path].Return(go);
     }

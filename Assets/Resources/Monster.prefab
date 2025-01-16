@@ -845,7 +845,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5, y: 0, z: 0}
-  m_LocalScale: {x: 6, y: 6, z: 6}
+  m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2989077874145307750}
@@ -885,6 +885,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7620d4043d49ae440b79630260793411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HP: 0
+  ATK: 0
+  ATK_Speed: 0
+  isDead: 0
+  m_BulletTransform: {fileID: 0}
   m_Speed: 0.5
 --- !u!1 &7851531358169225701
 GameObject:

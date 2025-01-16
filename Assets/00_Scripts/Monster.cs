@@ -44,6 +44,12 @@ public class Monster : Character
     public void GetDaamage(double damage)
     {
         if (isDead == true) { return; }
+
+        BaseManager.Pool.Pooling_OBJ("HIT_TEXT").Get((value) =>
+        {
+            value.GetComponent<HIT_TEXT>().Init(transform.position, damage, false);
+        });
+        
         HP -= damage;
 
         if (HP <= 0)
@@ -55,6 +61,16 @@ public class Monster : Character
             { 
                 value.transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
                 BaseManager.instance.Return_Pool(value.GetComponent<ParticleSystem>().main.duration, value, "Smoke");                
+            });
+
+            BaseManager.Pool.Pooling_OBJ("COIN_PARENT").Get((value) =>
+            {
+                value.GetComponent<COIN_PARENT>().Init(transform.position);
+            });
+
+            BaseManager.Pool.Pooling_OBJ("Item_OBJ").Get((value) => 
+            { 
+                value.GetComponent<Item_OBJ>().Init(transform.position);
             });
 
             BaseManager.Pool.m_pool_Dictionary["Monster"].Return(this.gameObject);
