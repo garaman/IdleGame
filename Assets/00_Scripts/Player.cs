@@ -1,17 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class Player : Character
 {
+    private Character_Scriptable CH_Data;
+    public GameObject TrailObj;
+    public string CH_Name;
     Vector3 startPos;
     Quaternion rot;
+
     protected override void Start()
     {
         base.Start();
+        ch_Mode = CH_Mode.Player;
+        Data_Set(Resources.Load<Character_Scriptable>("Scriptable/"+CH_Name));
+        Spawner.m_Players.Add(this);
 
         startPos = transform.position;
         rot = transform.rotation;
+    }
+
+    private void Data_Set(Character_Scriptable data)
+    {
+        CH_Data = data;
+        Attack_Range = data.m_Attack_Range;
+
+        Set_Status();
+    }
+
+    public void Set_Status()
+    {
+        ATK = BaseManager.Player.Get_ATK(CH_Data.m_Rarity);
+        HP = BaseManager.Player.Get_HP(CH_Data.m_Rarity);
     }
 
     private void Update()
@@ -52,7 +75,23 @@ public class Player : Character
             AnimatorChange("isATTACK");
             Invoke("InitAttack", 1.0f);            
         }
+    }    
+
+    public override void GetDamage(double damage, bool isCritical = false)
+    {
+        base.GetDamage(damage);
     }
 
-    
+    protected override void Attack()
+    {
+        base.Attack();
+        TrailObj.SetActive(true);
+
+        Invoke("TrailDisable",1.0f);
+    }
+
+    private void TrailDisable()
+    {
+        TrailObj.SetActive(false);
+    }
 }

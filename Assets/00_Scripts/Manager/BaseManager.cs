@@ -6,8 +6,10 @@ public class BaseManager : MonoBehaviour
 {
     public static BaseManager instance = null;
 
-    private static PoolManager pool = new PoolManager();
-    public static PoolManager Pool {  get { return pool; } } 
+    private static PoolManager s_pool = new PoolManager();
+    private static PlayerManager s_player = new PlayerManager();
+    public static PoolManager Pool {  get { return s_pool; } } 
+    public static PlayerManager Player {  get { return s_player; } } 
 
     private void Awake()
     {

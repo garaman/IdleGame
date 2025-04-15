@@ -16,6 +16,7 @@ public class Character : MonoBehaviour
     protected bool isATTACk = false;
 
     protected Transform m_Target;
+    protected CH_Mode ch_Mode;
 
     [SerializeField] private Transform m_BulletTransform;
     protected virtual void Start()
@@ -37,19 +38,19 @@ public class Character : MonoBehaviour
         animator.SetBool(temp, true);
     }
 
-    protected void FindClosetTarget<T>(T[] targets) where T : Component
+    protected void FindClosetTarget<T>(T[] targetArray) where T : Component
     {
-        var monsters = targets;
+        var targets = targetArray;
         Transform closetTarget = null;
         float maxDistance = target_Range;
 
-        foreach (var monster in monsters) 
+        foreach (var target in targets) 
         {
-            float targetDistance = Vector3.Distance(transform.position, monster.transform.position);
+            float targetDistance = Vector3.Distance(transform.position, target.transform.position);
 
             if(targetDistance < maxDistance)
             {
-                closetTarget = monster.transform;
+                closetTarget = target.transform;
                 maxDistance = targetDistance;
             }
         }
@@ -65,10 +66,33 @@ public class Character : MonoBehaviour
     {
         if(m_Target == null) { return; }
 
-        BaseManager.Pool.Pooling_OBJ("Bullet").Get((value) => 
+        BaseManager.Pool.Pooling_OBJ("Attack_Helper").Get((value) => 
         {
             value.transform.position = m_BulletTransform.position;
-            value.GetComponent<Bullet>().Init(m_Target, 10, "CH_01");
+            value.GetComponent<Bullet>().Init(m_Target, ATK, "CH_01");
         });
+    }
+
+    protected virtual void Attack()
+    {
+        if (m_Target == null) { return; }
+
+        BaseManager.Pool.Pooling_OBJ("Attack_Helper").Get((value) =>
+        {
+            value.transform.position = m_Target.position;
+            value.GetComponent<Bullet>().Attack_Init(m_Target, ATK);
+        });
+    }
+
+    public virtual void GetDamage(double damage, bool isCritical = false)
+    {
+        if (isDead == true) { return; }
+
+        BaseManager.Pool.Pooling_OBJ("HIT_TEXT").Get((value) =>
+        {
+            value.GetComponent<HIT_TEXT>().Init(transform.position, damage, isCritical, (ch_Mode == CH_Mode.Player)?true:false);
+        });
+
+        HP -= damage;
     }
 }

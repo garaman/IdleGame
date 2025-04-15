@@ -7,3 +7,10 @@ public enum Rarity
     Hero,
     Legendary
 }
+
+public enum CH_Mode
+{ 
+    Player,
+    Monster,
+    Boss
+}

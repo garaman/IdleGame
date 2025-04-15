@@ -17,19 +17,23 @@ public class HIT_TEXT : MonoBehaviour
         
     }
 
-    public void Init(Vector3 pos, double damage,bool isCritical = false)
+    public void Init(Vector3 pos, double damage,bool isCritical = false, bool isMonster = false)
     {
         pos.x += Random.Range(-0.3f, 0.3f);
         pos.z += Random.Range(-0.3f, 0.3f);
 
         target = pos;
-        m_text.text = damage.ToString();
+        m_text.text = StringMethod.ToCurrencyString(damage);
+
+        if(isMonster) { m_text.color = Color.red; }
+        else {  m_text.color = Color.white;}
+
         transform.SetParent(BaseCanvas.instance.HOLDER_LAYER(1));
 
         m_Critical.SetActive(isCritical);        
         if (isCritical)
         {
-            
+            m_text.color = Color.yellow;
         }
 
         BaseManager.instance.Return_Pool(3.0f, this.gameObject, "HIT_TEXT");

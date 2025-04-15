@@ -12,14 +12,16 @@ public class Monster : Character
     protected override void Start()
     {
         base.Start();
-        HP = 5;
+        ch_Mode = CH_Mode.Monster;        
     }
 
     public void Init()
     {
         isDead = false;
-        HP = 5;
-
+        HP = 20;
+        ATK = 10;
+        Attack_Range = 0.5f;
+        target_Range = Mathf.Infinity;
         StartCoroutine(Spawn_Start());        
     }
 
@@ -41,16 +43,10 @@ public class Monster : Character
         isSpawn = true;
     }
 
-    public void GetDaamage(double damage)
+    public override void GetDamage(double damage, bool isCritical)
     {
-        if (isDead == true) { return; }
-
-        BaseManager.Pool.Pooling_OBJ("HIT_TEXT").Get((value) =>
-        {
-            value.GetComponent<HIT_TEXT>().Init(transform.position, damage, false);
-        });
-        
-        HP -= damage;
+        bool critical = Critical(ref damage);
+        base.GetDamage(damage, critical);
 
         if (HP <= 0)
         {
@@ -79,26 +75,50 @@ public class Monster : Character
 
 
     private void Update()
-    {        
-        transform.LookAt(Vector3.zero);
+    {
+        if (isSpawn == false) { return; }
 
-        if(isSpawn == false) { return; }
+        FindClosetTarget(Spawner.m_Players.ToArray());
 
-        float targetDistance = Vector3.Distance(transform.position, Vector3.zero);
-        if(targetDistance <= 0.5f)
+        if (m_Target == null)
         {
-            AnimatorChange("isIDLE");
+            m_Target = Spawner.m_Players[0].transform; // 너무 멀리 생성된 경우 임의의 플레이어를 찾아가도록 셋팅.
         }
-        else
+
+        if (m_Target.GetComponent<Character>().isDead)
         {
-            transform.position = Vector3.MoveTowards(transform.position, Vector3.zero, Time.deltaTime * m_Speed);
+            FindClosetTarget(Spawner.m_Players.ToArray());
+        }
+
+        float targetDistance = Vector3.Distance(transform.position, m_Target.position);
+        if (targetDistance > Attack_Range && isATTACk == false)
+        {
             AnimatorChange("isMOVE");
-        }        
+            transform.position = Vector3.MoveTowards(transform.position, m_Target.position, Time.deltaTime);
+            transform.LookAt(m_Target.position);
+        }
+        else if (targetDistance <= Attack_Range && isATTACk == false)
+        {
+            isATTACk = true;
+            AnimatorChange("isATTACK");
+            Invoke("InitAttack", 1.0f);
+        } 
     }
 
     IEnumerator ReturnCoroutine(float timer, GameObject obj, string path)
     {
         yield return new WaitForSeconds(timer);
         BaseManager.Pool.m_pool_Dictionary[path].Return(obj);
+    }
+
+    private bool Critical(ref double damage)
+    {
+        float randValue = Random.Range(0.0f, 100.0f);
+        if (randValue <= BaseManager.Player.Critical_Percentage)
+        {
+            damage *= (BaseManager.Player.Critical_rate/100);
+            return true;
+        }
+        return false;
     }
 }

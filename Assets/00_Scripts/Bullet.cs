@@ -11,6 +11,7 @@ public class Bullet : MonoBehaviour
     string m_CharacterName;
     bool GetHit = false;
 
+    public ParticleSystem Attack_Particle;
 
     Dictionary<string,GameObject> m_Projectiles = new Dictionary<string, GameObject>();
     Dictionary<string,ParticleSystem> m_Muzzles = new Dictionary<string, ParticleSystem>();
@@ -31,14 +32,28 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    public void Init(Transform target, double Damage, string Character_Name)
+    public void Attack_Init(Transform target, double damage)
+    {
+        m_Target = target;
+        transform.LookAt(m_Target);
+        if (m_Target != null)
+        {
+            m_Target.GetComponent<Character>().GetDamage(damage);
+        }
+
+        GetHit = true;
+        Attack_Particle.Play();
+        StartCoroutine(ReturnObject(Attack_Particle.main.duration));
+    }
+
+    public void Init(Transform target, double damage, string Character_Name)
     {
         m_Target = target;
         transform.LookAt(m_Target);
         GetHit = false;
         m_TargetPos = m_Target.position;
 
-        m_Damage = Damage;
+        m_Damage = damage;
         m_CharacterName = Character_Name;
         m_Projectiles[m_CharacterName].gameObject.SetActive(true);
     }
@@ -55,7 +70,7 @@ public class Bullet : MonoBehaviour
             if (m_Target != null)
             {
                 GetHit = true;
-                m_Target.GetComponent<Monster>().GetDaamage(m_Damage);
+                m_Target.GetComponent<Character>().GetDamage(m_Damage);
                 m_Projectiles[m_CharacterName].gameObject.SetActive(false);
                 m_Muzzles[m_CharacterName].Play();
                                 
@@ -67,6 +82,6 @@ public class Bullet : MonoBehaviour
     IEnumerator ReturnObject(float Timer)
     {
         yield return new WaitForSeconds(Timer);
-        BaseManager.Pool.m_pool_Dictionary["Bullet"].Return(this.gameObject);
+        BaseManager.Pool.m_pool_Dictionary["Attack_Helper"].Return(this.gameObject);
     }
 }
