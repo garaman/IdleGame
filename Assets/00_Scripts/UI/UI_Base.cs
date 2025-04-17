@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class UI_Base : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    protected bool _Init = false;
+    public virtual bool Init()
     {
+        if(_Init) { return false; }
         
+        _Init = true;
+        return _Init;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        Init();
+    }
+
+    public virtual void DisableOBJ()
+    {
+        Utils.UI_Holder.Pop();
+        Destroy(this.gameObject);
     }
 }
