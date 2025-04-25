@@ -12,6 +12,8 @@ public class UI_Heros : UI_Base
 
     public override bool Init()
     {
+        MainUI.instance.FadeInOut(true, true, null);
+
         var Data = Resources.LoadAll<Character_Scriptable>("Scriptable");
         for (int i = 0; i < Data.Length; i++)
         {
@@ -27,6 +29,15 @@ public class UI_Heros : UI_Base
         }
 
         return base.Init();
+    }
+
+    public override void DisableOBJ()
+    {
+        MainUI.instance.FadeInOut(false, true, () =>
+        {
+            MainUI.instance.FadeInOut(true, false, null);
+            base.DisableOBJ();
+        });        
     }
 
 }

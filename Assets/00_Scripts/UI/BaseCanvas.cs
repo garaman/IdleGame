@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BaseCanvas : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class BaseCanvas : MonoBehaviour
 
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
 
@@ -22,7 +23,12 @@ public class BaseCanvas : MonoBehaviour
 
     public Transform COIN;
     [SerializeField] private Transform LAYER;
+    [SerializeField] private Button Hero_Button;
 
+    private void Start()
+    {
+        Hero_Button.onClick.AddListener(() => Get_UI("@Heros",true));
+    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -43,7 +49,17 @@ public class BaseCanvas : MonoBehaviour
         return LAYER.GetChild(value);
     }
 
-    public void Get_UI(string tmp)
+    public void Get_UI(string tmp, bool Fade = false)
+    {
+        if (Fade)
+        {
+            MainUI.instance.FadeInOut(false,true,() => GetPopupUI(tmp));
+            return;
+        }
+        GetPopupUI(tmp);
+    }
+
+    void GetPopupUI(string tmp)
     {
         var go = Instantiate(Resources.Load<UI_Base>("UI/" + tmp), transform);
         Utils.UI_Holder.Push(go);
