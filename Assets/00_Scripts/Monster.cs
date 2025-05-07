@@ -9,6 +9,11 @@ public class Monster : Character
     
     bool isSpawn = false;
 
+    public double R_ATK, R_HP;
+    public float R_Attack_Range;
+    public bool isBoss = false;
+
+
     protected override void Start()
     {
         base.Start();
@@ -18,9 +23,9 @@ public class Monster : Character
     public void Init()
     {
         isDead = false;
-        HP = 20;
-        ATK = 10;
-        Attack_Range = 0.5f;
+        HP = R_HP;
+        ATK = R_ATK;
+        Attack_Range = R_Attack_Range;
         target_Range = Mathf.Infinity;
         StartCoroutine(Spawn_Start());        
     }
@@ -43,72 +48,102 @@ public class Monster : Character
         isSpawn = true;
     }
 
+    protected override void Bullet()
+    {
+        if (m_Target == null) { return; }
+
+        BaseManager.Pool.Pooling_OBJ("Attack_Helper").Get((value) =>
+        {
+            value.transform.position = m_BulletTransform.position;
+            value.GetComponent<Bullet>().Init(m_Target, ATK, "MO_BOSS");
+        });
+    }
+
     public override void GetDamage(double damage, bool isCritical)
     {
         bool critical = Critical(ref damage);
         base.GetDamage(damage, critical);
 
+        if(isBoss)
+        {
+          MainUI.instance.BossSlider(HP, R_HP);
+        }
+
         if (HP <= 0)
         {
             isDead = true;
-            Spawner.m_Monsters.Remove(this);
-
-            var smokeObj = BaseManager.Pool.Pooling_OBJ("Smoke").Get((value) => 
-            { 
-                value.transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
-                BaseManager.instance.Return_Pool(value.GetComponent<ParticleSystem>().main.duration, value, "Smoke");                
-            });
-
-            BaseManager.Pool.Pooling_OBJ("COIN_PARENT").Get((value) =>
-            {
-                value.GetComponent<COIN_PARENT>().Init(transform.position);
-            });
-
-            BaseManager.Pool.Pooling_OBJ("Item_OBJ").Get((value) => 
-            { 
-                value.GetComponent<Item_OBJ>().Init(transform.position);
-            });
-
-            BaseManager.Pool.m_pool_Dictionary["Monster"].Return(this.gameObject);
+            Dead_Event();
         }
     }
+    private void Dead_Event()
+    {
+        if(!isBoss)
+        { 
+            StageManager.count++;
+            MainUI.instance.MonsterSlider();
+        }
+        else
+        {
+            StageManager.State_Change(Stage_State.Clear);
+        }
+        
+        Spawner.m_Monsters.Remove(this);
 
+        var smokeObj = BaseManager.Pool.Pooling_OBJ("Smoke").Get((value) =>
+        {
+            value.transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
+            BaseManager.instance.Return_Pool(value.GetComponent<ParticleSystem>().main.duration, value, "Smoke");
+        });
+
+        BaseManager.Pool.Pooling_OBJ("COIN_PARENT").Get((value) =>
+        {
+            value.GetComponent<COIN_PARENT>().Init(transform.position);
+        });
+
+        BaseManager.Pool.Pooling_OBJ("Item_OBJ").Get((value) =>
+        {
+            value.GetComponent<Item_OBJ>().Init(transform.position);
+        });
+
+        BaseManager.Pool.m_pool_Dictionary["Monster"].Return(this.gameObject);
+    }
 
     private void Update()
     {
         if (isSpawn == false) { return; }
 
-        FindClosetTarget(Spawner.m_Players.ToArray());
+        if(StageManager.m_State == Stage_State.Play || StageManager.m_State == Stage_State.BossPlay) 
+        { 
 
-        if (m_Target == null)
-        {
-            m_Target = Spawner.m_Players[0].transform; // 너무 멀리 생성된 경우 임의의 플레이어를 찾아가도록 셋팅.
+            if(m_Target == null)
+            {
+                FindClosetTarget(Spawner.m_Players.ToArray());
+            }        
+
+            if (m_Target == null)
+            {
+                m_Target = Spawner.m_Players[0].transform; // 너무 멀리 생성된 경우 임의의 플레이어를 찾아가도록 셋팅.
+            }
+
+            if (m_Target.GetComponent<Character>().isDead)
+            {
+                FindClosetTarget(Spawner.m_Players.ToArray());
+            }
+
+            float targetDistance = Vector3.Distance(transform.position, m_Target.position);
+            if (targetDistance > Attack_Range && isATTACk == false)
+            {
+                AnimatorChange("isMOVE");
+                transform.position = Vector3.MoveTowards(transform.position, m_Target.position, Time.deltaTime);
+                transform.LookAt(m_Target.position);
+            }
+            else if (targetDistance <= Attack_Range && isATTACk == false)
+            {
+                isATTACk = true;
+                AnimatorChange("isATTACK");
+                Invoke("InitAttack", 1.0f);
+            }
         }
-
-        if (m_Target.GetComponent<Character>().isDead)
-        {
-            FindClosetTarget(Spawner.m_Players.ToArray());
-        }
-
-        float targetDistance = Vector3.Distance(transform.position, m_Target.position);
-        if (targetDistance > Attack_Range && isATTACk == false)
-        {
-            AnimatorChange("isMOVE");
-            transform.position = Vector3.MoveTowards(transform.position, m_Target.position, Time.deltaTime);
-            transform.LookAt(m_Target.position);
-        }
-        else if (targetDistance <= Attack_Range && isATTACk == false)
-        {
-            isATTACk = true;
-            AnimatorChange("isATTACK");
-            Invoke("InitAttack", 1.0f);
-        } 
-    }
-
-    IEnumerator ReturnCoroutine(float timer, GameObject obj, string path)
-    {
-        yield return new WaitForSeconds(timer);
-        BaseManager.Pool.m_pool_Dictionary[path].Return(obj);
     }
 
     private bool Critical(ref double damage)

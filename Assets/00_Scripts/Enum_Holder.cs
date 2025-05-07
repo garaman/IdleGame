@@ -14,3 +14,13 @@ public enum CH_Mode
     Monster,
     Boss
 }
+
+public enum Stage_State
+{
+    Ready,
+    Play,
+    Boss,
+    BossPlay,
+    Clear,
+    Dead
+}

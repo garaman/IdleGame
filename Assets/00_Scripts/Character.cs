@@ -18,7 +18,7 @@ public class Character : MonoBehaviour
     protected Transform m_Target;
     protected CH_Mode ch_Mode;
 
-    [SerializeField] private Transform m_BulletTransform;
+    [SerializeField] protected Transform m_BulletTransform;
     protected virtual void Start()
     {
         animator = GetComponent<Animator>();
