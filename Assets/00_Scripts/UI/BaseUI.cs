@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UI_Base : MonoBehaviour
+public class BaseUI : MonoBehaviour
 {
     protected bool _Init = false;
     public virtual bool Init()

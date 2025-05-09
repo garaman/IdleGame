@@ -61,7 +61,7 @@ public class BaseCanvas : MonoBehaviour
 
     void GetPopupUI(string tmp)
     {
-        var go = Instantiate(Resources.Load<UI_Base>("UI/" + tmp), transform);
+        var go = Instantiate(Resources.Load<BaseUI>("UI/" + tmp), transform);
         Utils.UI_Holder.Push(go);
     }
 }

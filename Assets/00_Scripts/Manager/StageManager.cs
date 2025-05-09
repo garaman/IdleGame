@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public delegate void OnReadyEvent();
@@ -16,6 +17,7 @@ public class StageManager
 
     public static int maxCount = 10;
     public static int count;
+    public static int stage = 1;
 
     public static OnReadyEvent m_ReadyEvent;
     public static OnPlayEvent m_PlayEvent;
@@ -30,20 +32,22 @@ public class StageManager
         switch (state)
         {
             case Stage_State.Ready:
+                count = 0;
                 m_ReadyEvent?.Invoke();
                 BaseManager.instance.ActionCoroutine_Start(() => State_Change(Stage_State.Play), 2.0f);
                 break;
             case Stage_State.Play: 
                 m_PlayEvent?.Invoke();
                 break;
-            case Stage_State.Boss: 
+            case Stage_State.Boss:                
                 m_BossEvent?.Invoke();
                 break;
             case Stage_State.BossPlay:
                 m_BossPlayEvent?.Invoke();
                 break;
-            case Stage_State.Clear: 
-                count=0;
+            case Stage_State.Clear:
+                count = 0;
+                stage++;                
                 m_ClearEvent?.Invoke();
                 break;
             case Stage_State.Dead: 

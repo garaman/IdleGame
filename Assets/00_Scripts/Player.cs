@@ -22,6 +22,7 @@ public class Player : Character
 
         StageManager.m_ReadyEvent += OnReady;
         StageManager.m_BossEvent += OnBoss;
+        StageManager.m_ClearEvent += OnClear;
 
         startPos = transform.position;
         rot = transform.rotation;
@@ -43,6 +44,7 @@ public class Player : Character
 
     private void OnReady()
     {
+        AnimatorChange("isIDLE");
         transform.position = startPos;
     }
     private void OnBoss()
@@ -50,6 +52,18 @@ public class Player : Character
         AnimatorChange("isIDLE");
         Provocation_Effect.Play();
     }
+    private void OnClear()
+    {
+        AnimatorChange("isCLEAR"); 
+        StartCoroutine(Clear_Time(2.0f));
+    }
+
+    IEnumerator Clear_Time(float time)
+    {
+        yield return new WaitForSeconds(time);
+        AnimatorChange("isIDLE");
+    }
+
     private void Update()
     {
         if(StageManager.m_State == Stage_State.Play || StageManager.m_State == Stage_State.BossPlay)
@@ -100,9 +114,8 @@ public class Player : Character
         }
     }    
 
-    public void KnockBack(Vector3 targetPos)
-    {
-        transform.LookAt(targetPos);
+    public void KnockBack()
+    {        
         StartCoroutine(KnockBack_Coroutine(4.0f, 0.5f));
     }
 

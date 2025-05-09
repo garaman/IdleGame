@@ -6,7 +6,7 @@ using UnityEngine.U2D;
 public class Utils
 {
     public static SpriteAtlas m_Atlas = Resources.Load<SpriteAtlas>("Atlas");
-    public static Stack<UI_Base> UI_Holder = new Stack<UI_Base>();
+    public static Stack<BaseUI> UI_Holder = new Stack<BaseUI>();
 
     public static void CloseAllPopupUI()
     {
@@ -19,7 +19,7 @@ public class Utils
     {
         if (UI_Holder.Count == 0) { return; }
 
-        UI_Base popup = UI_Holder.Peek();
+        BaseUI popup = UI_Holder.Peek();
         popup.DisableOBJ();
     }
     public static Sprite Get_Atlas(string temp)

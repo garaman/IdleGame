@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class UI_Heros : UI_Base
+public class UI_Heros : BaseUI
 {
     public Transform Content;
     public GameObject Card;

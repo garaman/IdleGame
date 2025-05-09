@@ -27,7 +27,20 @@ public class Monster : Character
         ATK = R_ATK;
         Attack_Range = R_Attack_Range;
         target_Range = Mathf.Infinity;
+
+        if(isBoss)
+        {
+            StartCoroutine(SetSkillCoroutine());
+        }
+
         StartCoroutine(Spawn_Start());        
+    }
+
+    IEnumerator SetSkillCoroutine()
+    {
+        yield return new WaitForSeconds(3.0f);
+        GetComponent<BaseSkill>().Set_Skill();
+        StartCoroutine(SetSkillCoroutine());
     }
 
     IEnumerator Spawn_Start() // 스폰시 몬스터 등장효과 크기 0 -> 1 로 점점 커지면서 등장.
@@ -105,9 +118,17 @@ public class Monster : Character
             value.GetComponent<Item_OBJ>().Init(transform.position);
         });
 
-        BaseManager.Pool.m_pool_Dictionary["Monster"].Return(this.gameObject);
+        if(!isBoss)
+        {
+            BaseManager.Pool.m_pool_Dictionary["Monster"].Return(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
     }
 
+    
     private void Update()
     {
         if (isSpawn == false) { return; }

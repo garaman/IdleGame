@@ -46,19 +46,50 @@ public class MainUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI m_BossSlider_Name;
     [SerializeField] private TextMeshProUGUI m_Stage_Text;
 
+
+    private void SliderOBJCheck(bool isBoss)
+    {
+        m_BossSlider_OBJ.SetActive(isBoss);
+        m_MonsterSlider_OBJ.SetActive(!isBoss);
+
+        MonsterSlider();
+
+        float value = isBoss ? 1.0f : 0.0f;
+        BossSlider(value, 1.0f);
+    }
+
     private void Start()
     {
         TextCheck();
-        SlliderCheck();
+        SliderOBJCheck(false);
 
-        StageManager.m_ReadyEvent += () => FadeInOut(true, false);
+        StageManager.m_ReadyEvent += () =>
+        {
+            FadeInOut(true, false);            
+            SliderOBJCheck(false);
+        };
         StageManager.m_BossEvent += () => OnBoss();        
+        StageManager.m_ClearEvent += () => OnClear();        
     }
 
     private void OnBoss()
     {
-        m_BossSlider_OBJ.SetActive(true);
-        m_MonsterSlider_OBJ.SetActive(false);
+        SliderOBJCheck(true);        
+    }
+
+    private void OnClear()
+    {
+        SliderOBJCheck(false);
+        StartCoroutine(Clear_Daley());
+    }
+
+    IEnumerator Clear_Daley()
+    {
+        yield return new WaitForSeconds(2.0f);
+        FadeInOut(false);
+
+        yield return new WaitForSeconds(1.0f);
+        StageManager.State_Change(Stage_State.Ready);
     }
 
     public void TextCheck()
@@ -66,14 +97,7 @@ public class MainUI : MonoBehaviour
         m_Level_Text.text = "Lv."+(BaseManager.Player.Level +1).ToString();
         m_FightScore_Text.text = StringMethod.ToCurrencyString(BaseManager.Player.Get_FightScore());
     }
-    public void SlliderCheck()
-    {
-        m_BossSlider_OBJ.SetActive(false);
-        m_MonsterSlider_OBJ.SetActive(true);
-
-        m_MonsterSlider.value = 0;
-        m_MonsterSlider_Text.text = "0%";
-    }
+    
 
     public void FadeInOut(bool FadeInOut,bool Sibling = false, Action action = null)
     {

@@ -27,13 +27,14 @@ public class Character : MonoBehaviour
 
     protected void AnimatorChange(string temp)
     {
-        if(temp == "isATTACK")
-        {
-            animator.SetTrigger("isATTACK");
-            return;
-        }
         animator.SetBool("isIDLE", false);
         animator.SetBool("isMOVE", false);
+
+        if (temp == "isATTACK" || temp == "isCLEAR")
+        {
+            animator.SetTrigger(temp);
+            return;
+        }       
 
         animator.SetBool(temp, true);
     }

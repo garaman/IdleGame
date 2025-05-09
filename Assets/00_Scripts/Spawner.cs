@@ -50,7 +50,8 @@ public class Spawner : MonoBehaviour
         {
             if(Vector3.Distance(targetPos, m_Players[i].transform.position) <= 2.5f)
             {
-                m_Players[i].KnockBack(targetPos);
+                m_Players[i].transform.LookAt(targetPos);
+                m_Players[i].KnockBack();
             }
         }
         yield return new WaitForSeconds(1.5f);
