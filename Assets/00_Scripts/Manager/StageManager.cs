@@ -19,6 +19,8 @@ public class StageManager
     public static int count;
     public static int stage = 1;
 
+    public static bool isDead = false;
+
     public static OnReadyEvent m_ReadyEvent;
     public static OnPlayEvent m_PlayEvent;
     public static OnBossEvent m_BossEvent;
@@ -50,7 +52,8 @@ public class StageManager
                 stage++;                
                 m_ClearEvent?.Invoke();
                 break;
-            case Stage_State.Dead: 
+            case Stage_State.Dead:
+                isDead = true;
                 m_DeadEvent?.Invoke();                
                 break;
         }

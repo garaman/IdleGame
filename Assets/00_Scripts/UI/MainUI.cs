@@ -46,9 +46,28 @@ public class MainUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI m_BossSlider_Name;
     [SerializeField] private TextMeshProUGUI m_Stage_Text;
 
+    [Space(10.0f)]
+    [Header("BossEnter")]
+    [SerializeField] private GameObject m_BossEnter_OBJ;
+
+    public void Set_BossState()
+    {
+        StageManager.isDead = false;
+        StageManager.State_Change(Stage_State.Boss);
+        m_BossEnter_OBJ.SetActive(false);
+    }
 
     private void SliderOBJCheck(bool isBoss)
     {
+        if (StageManager.isDead == true)
+        {
+            m_BossSlider_OBJ.SetActive(false);
+            m_MonsterSlider_OBJ.SetActive(false);
+
+            m_BossEnter_OBJ.SetActive(true);
+            return;
+        }
+
         m_BossSlider_OBJ.SetActive(isBoss);
         m_MonsterSlider_OBJ.SetActive(!isBoss);
 
@@ -70,6 +89,7 @@ public class MainUI : MonoBehaviour
         };
         StageManager.m_BossEvent += () => OnBoss();        
         StageManager.m_ClearEvent += () => OnClear();        
+        StageManager.m_DeadEvent += () => OnDead();        
     }
 
     private void OnBoss()
@@ -83,6 +103,12 @@ public class MainUI : MonoBehaviour
         StartCoroutine(Clear_Daley());
     }
 
+    private void OnDead()
+    {
+        StartCoroutine(Dead_Daley());
+    }
+
+
     IEnumerator Clear_Daley()
     {
         yield return new WaitForSeconds(2.0f);
@@ -90,6 +116,25 @@ public class MainUI : MonoBehaviour
 
         yield return new WaitForSeconds(1.0f);
         StageManager.State_Change(Stage_State.Ready);
+    }
+
+    IEnumerator Dead_Daley()
+    {
+        yield return StartCoroutine(Clear_Daley());
+        SliderOBJCheck(false);
+
+        for(int i = 0; i < Spawner.m_Monsters.Count; i++)
+        {
+            if(Spawner.m_Monsters[i].isBoss == true)
+            {
+                Destroy(Spawner.m_Monsters[i].gameObject);
+            }
+            else
+            {
+                BaseManager.Pool.m_pool_Dictionary["Monster"].Return(Spawner.m_Monsters[i].gameObject);
+            }                
+        }
+        Spawner.m_Monsters.Clear();        
     }
 
     public void TextCheck()

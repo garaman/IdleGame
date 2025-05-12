@@ -17,7 +17,9 @@ public class Monster : Character
     protected override void Start()
     {
         base.Start();
-        ch_Mode = CH_Mode.Monster;        
+        ch_Mode = CH_Mode.Monster;    
+        
+        StageManager.m_DeadEvent += OnDead;
     }
 
     public void Init()
@@ -90,10 +92,13 @@ public class Monster : Character
     }
     private void Dead_Event()
     {
-        if(!isBoss)
+        if(!isBoss )
         { 
-            StageManager.count++;
-            MainUI.instance.MonsterSlider();
+            if(!StageManager.isDead)
+            { 
+                StageManager.count++;
+                MainUI.instance.MonsterSlider();
+            }
         }
         else
         {
@@ -176,5 +181,11 @@ public class Monster : Character
             return true;
         }
         return false;
+    }
+
+    public void OnDead()
+    {   
+        StopAllCoroutines();
+        AnimatorChange("isIDLE");
     }
 }

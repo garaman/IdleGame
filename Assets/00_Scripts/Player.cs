@@ -45,7 +45,14 @@ public class Player : Character
     private void OnReady()
     {
         AnimatorChange("isIDLE");
+        if(isDead) 
+        { 
+            Spawner.m_Players.Add(this);
+            Set_Status();
+        }  
+        isDead = false;
         transform.position = startPos;
+        transform.rotation = rot;
     }
     private void OnBoss()
     {
@@ -66,7 +73,9 @@ public class Player : Character
 
     private void Update()
     {
-        if(StageManager.m_State == Stage_State.Play || StageManager.m_State == Stage_State.BossPlay)
+        if(isDead) { return; }
+
+        if (StageManager.m_State == Stage_State.Play || StageManager.m_State == Stage_State.BossPlay)
         { 
             FindClosetTarget(Spawner.m_Monsters.ToArray());
 
@@ -134,8 +143,29 @@ public class Player : Character
     }
     public override void GetDamage(double damage, bool isCritical = false)
     {
+        if(StageManager.isDead == true) { return; }
+
         base.GetDamage(damage);
+
+        if(HP <= 0)
+        {
+            isDead = true;
+            DeadEvent();
+        }
     }
+
+    private void DeadEvent()
+    {
+        Spawner.m_Players.Remove(this);
+        if(Spawner.m_Players.Count <= 0 && StageManager.isDead == false)
+        {
+            StageManager.State_Change(Stage_State.Dead);
+        }
+        
+        AnimatorChange("isDEAD");
+        m_Target = null;
+    }
+    
 
     protected override void Attack()
     {

@@ -18,6 +18,9 @@ public class M_LightningThunder : BaseSkill
         {
             Player player = players[Random.Range(0,players.Length)];
             Instantiate(Resources.Load("PoolOBJ/Skill/M_LightningThunder"), player.transform.position, Quaternion.identity);
+
+            CameraManager.instance.CameraShake();
+
             player.GetDamage(10);
             yield return new WaitForSeconds(0.2f);
         }        
