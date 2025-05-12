@@ -7,7 +7,7 @@ public class Utils
 {
     public static SpriteAtlas m_Atlas = Resources.Load<SpriteAtlas>("Atlas");
     public static Stack<BaseUI> UI_Holder = new Stack<BaseUI>();
-
+    public static LevelDesign DesignData = Resources.Load<LevelDesign>("Scriptable/LevelDesignData");
     public static void CloseAllPopupUI()
     {
         while(UI_Holder.Count > 0)
@@ -39,5 +39,16 @@ public class Utils
         }
 
         return "<color=#FFFFFF>";
+    }
+
+    public static double CalculatedValue(float baseValue, int level, float value)
+    {
+        return baseValue * Mathf.Pow((level+1), value);
+    }
+
+    public static bool Coin_Check(double value)
+    {
+        if (BaseManager.Data.Money >= value) { return true; }
+        else { return false; }
     }
 }

@@ -7890,6 +7890,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Level_Text: {fileID: 718644175}
   m_FightScore_Text: {fileID: 284516140}
+  m_Money_Text: {fileID: 1059551379}
+  m_LevelUpMoney_Text: {fileID: 1598282033}
   m_Fade: {fileID: 1414868043}
   m_FadeDuration: 0.5
   m_MonsterSlider_OBJ: {fileID: 1538993232}
@@ -8013,7 +8015,7 @@ GameObject:
   - component: {fileID: 1059551380}
   - component: {fileID: 1059551379}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Coin_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11510,7 +11512,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 18, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 30}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1598282032

@@ -10,8 +10,10 @@ public class BaseManager : MonoBehaviour
     #region Managers
     private static PoolManager s_pool = new PoolManager();
     private static PlayerManager s_player = new PlayerManager();    
+    private static GameDataManager s_data = new GameDataManager();
     public static PoolManager Pool {  get { return s_pool; } } 
-    public static PlayerManager Player {  get { return s_player; } }     
+    public static PlayerManager Player {  get { return s_player; } }    
+    public static GameDataManager Data { get { return s_data; } }
     
     #endregion
 

@@ -26,6 +26,8 @@ public class MainUI : MonoBehaviour
     [Header("Default")]
     [SerializeField] private TextMeshProUGUI m_Level_Text;
     [SerializeField] private TextMeshProUGUI m_FightScore_Text;
+    [SerializeField] private TextMeshProUGUI m_Money_Text;
+    [SerializeField] private TextMeshProUGUI m_LevelUpMoney_Text;
 
     [Space(10.0f)]
     [Header("Fade")]    
@@ -139,8 +141,14 @@ public class MainUI : MonoBehaviour
 
     public void TextCheck()
     {
-        m_Level_Text.text = "Lv."+(BaseManager.Player.Level +1).ToString();
+        m_Level_Text.text = "Lv."+(BaseManager.Data.Level +1).ToString();
         m_FightScore_Text.text = StringMethod.ToCurrencyString(BaseManager.Player.Get_FightScore());
+
+        double levelUpMoneyValue = Utils.DesignData.levelData.MONEY();
+        m_LevelUpMoney_Text.text = StringMethod.ToCurrencyString(levelUpMoneyValue) +"G";
+        m_LevelUpMoney_Text.color = Utils.Coin_Check(levelUpMoneyValue) ? Color.green : Color.red;
+
+        m_Money_Text.text = StringMethod.ToCurrencyString(BaseManager.Data.Money) + "G";
     }
     
 

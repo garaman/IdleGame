@@ -16,8 +16,7 @@ public class StageManager
     public static Stage_State m_State;
 
     public static int maxCount = 10;
-    public static int count;
-    public static int stage = 1;
+    public static int count;    
 
     public static bool isDead = false;
 
@@ -49,7 +48,7 @@ public class StageManager
                 break;
             case Stage_State.Clear:
                 count = 0;
-                stage++;                
+                BaseManager.Data.Stage++;                
                 m_ClearEvent?.Invoke();
                 break;
             case Stage_State.Dead:

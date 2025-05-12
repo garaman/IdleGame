@@ -31,6 +31,8 @@ public class COIN_PARENT : MonoBehaviour
         }
         transform.SetParent(BaseCanvas.instance.HOLDER_LAYER(0));
 
+        BaseManager.Data.Money += Utils.DesignData.levelData.MONEY();
+
         StartCoroutine(Coin_Effect());
     }
 
@@ -78,6 +80,8 @@ public class COIN_PARENT : MonoBehaviour
 
             yield return null;
         }
+
+        MainUI.instance.TextCheck();
     }
 
     private bool Distanc_Boolean(Vector2[] end, float range)

@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerManager
 {
-    public int Level;
-    public double EXP;
     public double ATK = 10;
     public double HP = 50;
 
@@ -14,53 +12,65 @@ public class PlayerManager
     
     public void EXP_UP()
     {
-        EXP += float.Parse(CSV_Importer.Exp[Level]["Get_EXP"].ToString());
-        if(EXP >= float.Parse(CSV_Importer.Exp[Level]["EXP"].ToString()))
+        if(BaseManager.Data.Money < Get_MONEY()) { return; }
+
+        BaseManager.Data.Money -= Get_MONEY();
+        BaseManager.Data.EXP += Get_EXP();
+
+        if(BaseManager.Data.EXP >= Get_MAXEXP())
         {
-            Level++;
-            ATK += Next_ATK();
-            HP += Next_HP();
-            MainUI.instance.TextCheck();
+            BaseManager.Data.Level++;
+            ATK += Get_ATK();
+            HP += Get_HP();
+            BaseManager.Data.EXP = 0;
+            //MainUI.instance.TextCheck();
 
             for (int i = 0; i < Spawner.m_Players.Count; i++)
             {
                 Spawner.m_Players[i].Set_Status();
             }
         }
+        MainUI.instance.TextCheck();
     }
 
     public float EXP_percentage()
     {
-        float exp = float.Parse(CSV_Importer.Exp[Level]["EXP"].ToString());
-        double currentExp = EXP;
-        if (Level >= 1)
-        {
-            float preEXP = float.Parse(CSV_Importer.Exp[Level - 1]["EXP"].ToString());
-            exp -= preEXP;
-            currentExp -= preEXP;
-        }
+        float exp = (float)Get_MAXEXP();
+        double currentExp = BaseManager.Data.EXP;
+        
         return (float)currentExp/exp;
     }
 
     public float Next_EXP()
     {
-        float exp = float.Parse(CSV_Importer.Exp[Level]["EXP"].ToString());
-        float getExp = float.Parse(CSV_Importer.Exp[Level]["Get_EXP"].ToString());
-        if (Level >= 1)
-        {            
-            exp -= float.Parse(CSV_Importer.Exp[Level - 1]["EXP"].ToString());         
-        }
+        float exp = (float)Get_MAXEXP();
+        float getExp = (float)Get_EXP();
+        
         return getExp / exp * 100.0f;
     }
 
-    public double Next_ATK()
+    public double Get_EXP()
     {
-        return float.Parse(CSV_Importer.Exp[Level]["Get_EXP"].ToString()) * (Level + 1) / 5;
+        return Utils.DesignData.levelData.EXP();
+    }
+    public double Get_MAXEXP()
+    {
+        return Utils.DesignData.levelData.MAXEXP();
+    }
+    public double Get_MONEY()
+    {
+        return Utils.DesignData.levelData.MONEY();
+    }
+     
+
+    public double Get_ATK()
+    {
+        return Utils.DesignData.levelData.ATK();
     }
 
-    public double Next_HP()
+    public double Get_HP()
     {
-        return float.Parse(CSV_Importer.Exp[Level]["Get_EXP"].ToString()) * (Level + 1) / 3;
+        return Utils.CalculatedValue(Utils.DesignData.levelData.B_HP, BaseManager.Data.Level, Utils.DesignData.levelData.C_HP);
     }
 
     public double Get_ATK(Rarity rarity)

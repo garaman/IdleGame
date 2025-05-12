@@ -8,11 +8,11 @@ public class Monster : Character
     public float m_Speed;
     
     bool isSpawn = false;
-
-    public double R_ATK, R_HP;
+        
     public float R_Attack_Range;
     public bool isBoss = false;
 
+    double Max_HP;
 
     protected override void Start()
     {
@@ -25,13 +25,17 @@ public class Monster : Character
     public void Init()
     {
         isDead = false;
-        HP = R_HP;
-        ATK = R_ATK;
+        HP = Utils.DesignData.stageData.HP();
+        ATK = Utils.DesignData.stageData.ATK();
         Attack_Range = R_Attack_Range;
         target_Range = Mathf.Infinity;
 
         if(isBoss)
         {
+            HP = HP * 5;
+            ATK = ATK * 2;
+
+            Max_HP = HP;
             StartCoroutine(SetSkillCoroutine());
         }
 
@@ -81,7 +85,7 @@ public class Monster : Character
 
         if(isBoss)
         {
-          MainUI.instance.BossSlider(HP, R_HP);
+          MainUI.instance.BossSlider(HP, Max_HP);
         }
 
         if (HP <= 0)
