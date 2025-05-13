@@ -122,10 +122,15 @@ public class Monster : Character
             value.GetComponent<COIN_PARENT>().Init(transform.position);
         });
 
-        BaseManager.Pool.Pooling_OBJ("Item_OBJ").Get((value) =>
+        var items = BaseManager.Item.GetDropSet();
+
+        for(int i = 0; i < items.Count; i++)
         {
-            value.GetComponent<Item_OBJ>().Init(transform.position);
-        });
+            BaseManager.Pool.Pooling_OBJ("Item_OBJ").Get((value) =>
+            {
+                value.GetComponent<Item_OBJ>().Init(transform.position, items[i]);
+            });
+        }        
 
         if(!isBoss)
         {

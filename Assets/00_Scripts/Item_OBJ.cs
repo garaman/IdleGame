@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
+using static UnityEditor.Progress;
 
 public class Item_OBJ : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class Item_OBJ : MonoBehaviour
 
     Rarity rarity;
     bool isCheck = false;
+
+    ItemScriptable m_item;
     void RarityCheck()
     {
         isCheck = true;
@@ -24,8 +27,8 @@ public class Item_OBJ : MonoBehaviour
         Raritys[(int)rarity].SetActive(true);
         ItemTextRect.gameObject.SetActive(true);
         ItemTextRect.SetParent(BaseCanvas.instance.HOLDER_LAYER(2));
-
-        m_Text.text = Utils.String_Color_Rarity(rarity) + "TEST ITEM" + "</color>";
+        
+        m_Text.text = Utils.String_Color_Rarity(rarity) + m_item.ItemName + "</color>";
 
         StartCoroutine(LootItem());
     }
@@ -57,10 +60,11 @@ public class Item_OBJ : MonoBehaviour
 
     }
 
-    public void Init(Vector3 pos)
+    public void Init(Vector3 pos, ItemScriptable data)    
     {
-        rarity = (Rarity)Random.Range(0, 5);
-
+        m_item = data;
+        rarity = m_item.ItemRarity;
+        
         isCheck = false;
         ItemTextRect.gameObject.SetActive(false);
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class BaseManager : MonoBehaviour
 {
@@ -11,10 +12,12 @@ public class BaseManager : MonoBehaviour
     private static PoolManager s_pool = new PoolManager();
     private static PlayerManager s_player = new PlayerManager();    
     private static GameDataManager s_data = new GameDataManager();
+    private static ItemManager s_item = new ItemManager();
     public static PoolManager Pool {  get { return s_pool; } } 
     public static PlayerManager Player {  get { return s_player; } }    
     public static GameDataManager Data { get { return s_data; } }
-    
+    public static ItemManager Item { get { return s_item; } }
+
     #endregion
 
     private void Awake()
@@ -28,7 +31,7 @@ public class BaseManager : MonoBehaviour
         {
             instance = this;
             Pool.Init(this.transform);
-
+            Item.Init();
             ActionCoroutine_Start(() => StageManager.State_Change(Stage_State.Ready), 0.5f);
             
             DontDestroyOnLoad(this.gameObject);
@@ -59,7 +62,6 @@ public class BaseManager : MonoBehaviour
         yield return new WaitForSeconds(timer);
         Pool.m_pool_Dictionary[path].Return(obj);
     }
-
 
     IEnumerator Action_Coroutine(Action action, float timer)
     {
