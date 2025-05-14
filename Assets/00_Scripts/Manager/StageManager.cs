@@ -15,8 +15,8 @@ public class StageManager
     // 상태 패턴 { State Pattern }
     public static Stage_State m_State;
 
-    public static int maxCount = 10;
-    public static int count;    
+    public static int maxCount;
+    public static int count = 0;    
 
     public static bool isDead = false;
 
@@ -33,6 +33,7 @@ public class StageManager
         switch (state)
         {
             case Stage_State.Ready:
+                maxCount = int.Parse(CSV_Importer.SpawnDesign[BaseManager.Data.Stage]["MaxCount"].ToString());
                 count = 0;
                 m_ReadyEvent?.Invoke();
                 BaseManager.instance.ActionCoroutine_Start(() => State_Change(Stage_State.Play), 2.0f);
@@ -40,7 +41,8 @@ public class StageManager
             case Stage_State.Play: 
                 m_PlayEvent?.Invoke();
                 break;
-            case Stage_State.Boss:                
+            case Stage_State.Boss:
+                count = 0;
                 m_BossEvent?.Invoke();
                 break;
             case Stage_State.BossPlay:
@@ -48,7 +50,7 @@ public class StageManager
                 break;
             case Stage_State.Clear:
                 count = 0;
-                BaseManager.Data.Stage++;                
+                BaseManager.Data.Stage++;
                 m_ClearEvent?.Invoke();
                 break;
             case Stage_State.Dead:

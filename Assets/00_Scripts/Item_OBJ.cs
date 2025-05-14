@@ -47,6 +47,8 @@ public class Item_OBJ : MonoBehaviour
 
         m_Loot.Play();
 
+        MainUI.instance.GetItem(m_item);        
+
         yield return new WaitForSeconds(0.5f);
 
         BaseManager.Pool.m_pool_Dictionary["Item_OBJ"].Return(this.gameObject);

@@ -19,7 +19,7 @@ public class Monster : Character
         base.Start();
         ch_Mode = CH_Mode.Monster;    
         
-        StageManager.m_DeadEvent += OnDead;
+        //StageManager.m_DeadEvent += OnDead;
     }
 
     public void Init()
@@ -32,8 +32,8 @@ public class Monster : Character
 
         if(isBoss)
         {
-            HP = HP * 5;
-            ATK = ATK * 2;
+            HP = HP * 10;
+            ATK = ATK * 5;
 
             Max_HP = HP;
             StartCoroutine(SetSkillCoroutine());
@@ -193,8 +193,12 @@ public class Monster : Character
     }
 
     public void OnDead()
-    {   
-        StopAllCoroutines();
+    {
         AnimatorChange("isIDLE");
+        if (isBoss)
+        {
+            StopAllCoroutines();
+            Destroy(this.gameObject);
+        }        
     }
 }

@@ -5,23 +5,28 @@ using UnityEngine;
 public class M_LightningThunder : BaseSkill
 {
     private int m_SkillCount = 5;
+    private double ATK;
 
     public override void Set_Skill()
     {
         base.Set_Skill();
+        ATK = Utils.DesignData.stageData.ATK();        
         StartCoroutine(M_SkillCoroutine());
     }
 
     IEnumerator M_SkillCoroutine()
     {
-        for(int i = 0; i < m_SkillCount; i++)
+        double damege = ATK / (m_SkillCount / 2);
+
+        for (int i = 0; i < m_SkillCount; i++)
         {
             Player player = players[Random.Range(0,players.Length)];
+            
             Instantiate(Resources.Load("PoolOBJ/Skill/M_LightningThunder"), player.transform.position, Quaternion.identity);
 
             CameraManager.instance.CameraShake();
 
-            player.GetDamage(10);
+            player.GetDamage(damege);
             yield return new WaitForSeconds(0.2f);
         }        
     }

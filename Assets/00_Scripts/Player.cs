@@ -125,7 +125,7 @@ public class Player : Character
 
     public void KnockBack()
     {        
-        StartCoroutine(KnockBack_Coroutine(4.0f, 0.5f));
+        StartCoroutine(KnockBack_Coroutine(3.0f, 0.3f));
     }
 
     IEnumerator KnockBack_Coroutine(float power, float duration)
@@ -136,8 +136,11 @@ public class Player : Character
 
         while (time > 0f)
         {
-            time -= Time.deltaTime;
-            transform.position += force * Time.deltaTime;
+            time -= Time.deltaTime;            
+            if(Vector3.Distance(Vector3.zero, transform.position) < 3.0)
+            {
+                transform.position += force * Time.deltaTime;
+            }
             yield return null;
         }
     }
@@ -157,13 +160,15 @@ public class Player : Character
     private void DeadEvent()
     {
         Spawner.m_Players.Remove(this);
-        if(Spawner.m_Players.Count <= 0 && StageManager.isDead == false)
-        {
-            StageManager.State_Change(Stage_State.Dead);
-        }
+        //Debug.Log(Spawner.m_Players.Count);       
         
         AnimatorChange("isDEAD");
         m_Target = null;
+
+        if (Spawner.m_Players.Count <= 0 && StageManager.isDead == false)
+        {
+            StageManager.State_Change(Stage_State.Dead);
+        }
     }
     
 
