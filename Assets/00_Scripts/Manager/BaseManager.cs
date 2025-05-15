@@ -13,11 +13,12 @@ public class BaseManager : MonoBehaviour
     private static PlayerManager s_player = new PlayerManager();    
     private static GameDataManager s_data = new GameDataManager();
     private static ItemManager s_item = new ItemManager();
+    private static HeroManager s_hero = new HeroManager();
     public static PoolManager Pool {  get { return s_pool; } } 
     public static PlayerManager Player {  get { return s_player; } }    
     public static GameDataManager Data { get { return s_data; } }
     public static ItemManager Item { get { return s_item; } }
-
+    public static HeroManager Hero { get { return s_hero; } }
     #endregion
 
     private void Awake()
@@ -31,6 +32,7 @@ public class BaseManager : MonoBehaviour
         {
             instance = this;
             Pool.Init(this.transform);
+            Data.Init();
             Item.Init();
             ActionCoroutine_Start(() => StageManager.State_Change(Stage_State.Ready), 0.5f);
             

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Player : Character
 {
-    private Character_Scriptable CH_Data;
+    private hero_Scriptable CH_Data;
     public ParticleSystem Provocation_Effect;
     public GameObject TrailObj;
     public string CH_Name;
@@ -17,7 +17,7 @@ public class Player : Character
     {
         base.Start();
         ch_Mode = CH_Mode.Player;
-        Data_Set(Resources.Load<Character_Scriptable>("Scriptable/Character/"+CH_Name));
+        Data_Set(Resources.Load<hero_Scriptable>("Scriptable/Hero/"+CH_Name));
         Spawner.m_Players.Add(this);
 
         StageManager.m_ReadyEvent += OnReady;
@@ -28,7 +28,7 @@ public class Player : Character
         rot = transform.rotation;
     }
 
-    private void Data_Set(Character_Scriptable data)
+    private void Data_Set(hero_Scriptable data)
     {
         CH_Data = data;
         Attack_Range = data.m_Attack_Range;
@@ -78,6 +78,7 @@ public class Player : Character
         if (StageManager.m_State == Stage_State.Play || StageManager.m_State == Stage_State.BossPlay)
         { 
             FindClosetTarget(Spawner.m_Monsters.ToArray());
+            
 
             if (m_Target == null)
             {
@@ -104,7 +105,6 @@ public class Player : Character
                         FindClosetTarget(Spawner.m_Monsters.ToArray());
                     }
                 }
-
 
                 float targetDistance = Vector3.Distance(transform.position, m_Target.position);
                 if (targetDistance <= target_Range && targetDistance > Attack_Range && isATTACk == false) // 추격범위 O , 공격범위 X

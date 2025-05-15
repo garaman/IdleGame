@@ -155,14 +155,7 @@ public class MainUI : MonoBehaviour
 
         for(int i = 0; i < Spawner.m_Monsters.Count; i++)
         {
-            if(Spawner.m_Monsters[i].isBoss == true)
-            {
-                Destroy(Spawner.m_Monsters[i].gameObject);
-            }
-            else
-            {
-                BaseManager.Pool.m_pool_Dictionary["Monster"].Return(Spawner.m_Monsters[i].gameObject);
-            }                
+            BaseManager.Pool.m_pool_Dictionary["Monster"].Return(Spawner.m_Monsters[i].gameObject);         
         }
         Spawner.m_Monsters.Clear();
         TextCheck();

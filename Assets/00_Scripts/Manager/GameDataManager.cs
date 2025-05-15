@@ -10,4 +10,32 @@ public class GameDataManager
     public double EXP;
     public double Money;        
 
+    // 전체 영웅 정보.
+    public Dictionary<string, HeroInfo> HeroInfos = new Dictionary<string, HeroInfo>();
+
+    public void Init()
+    {
+        SetHeroInfo();
+    }
+
+    public void SetHeroInfo()
+    {
+        var datas = Resources.LoadAll<hero_Scriptable>("Scriptable/Hero");
+
+        foreach (var data in datas)
+        {
+            var info = new HeroInfo();
+            info.Data = data;
+            info.Level = 0;
+            info.Count = 0;
+            HeroInfos.Add(data.name, info);
+        }
+    }
+}
+
+public class HeroInfo
+{
+    public hero_Scriptable Data;
+    public int Level;
+    public int Count;
 }

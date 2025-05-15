@@ -49,9 +49,9 @@ public class Spawner : MonoBehaviour
     {
         if (m_Monsters.Count > 0)
         {
-            foreach(var monster in m_Monsters)
+            for(int i = 0; i < m_Monsters.Count; i++)
             {
-                monster.OnDead();
+                m_Monsters[i].OnDead();
             }
         }
     }

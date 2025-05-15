@@ -194,10 +194,12 @@ public class Monster : Character
 
     public void OnDead()
     {
-        AnimatorChange("isIDLE");
+        AnimatorChange("isIDLE");        
+
         if (isBoss)
         {
             StopAllCoroutines();
+            Spawner.m_Monsters.Remove(this);
             Destroy(this.gameObject);
         }        
     }
