@@ -99,8 +99,6 @@ public class UI_Heros : BaseUI
 
             go.transform.position = RenderManager.instance.ReturnScreenPoint(RenderManager.instance.Hero.circles[i]);
         }
-        
-        
     }
 
     private void SetHeroButton(int value)
@@ -114,6 +112,7 @@ public class UI_Heros : BaseUI
         {
             Cards[i].GetHeroCheck();
         }
+        MainUI.instance.SetHeroData();
     }
 
 }

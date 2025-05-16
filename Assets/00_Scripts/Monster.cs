@@ -23,8 +23,7 @@ public class Monster : Character
     }
 
     public void Init()
-    {
-        isDead = false;
+    {        
         HP = Utils.DesignData.stageData.HP();
         ATK = Utils.DesignData.stageData.ATK();
         Attack_Range = R_Attack_Range;
@@ -65,6 +64,7 @@ public class Monster : Character
         }
         yield return new WaitForSeconds(0.3f);        
         isSpawn = true;
+        isDead = false;
     }
 
     protected override void Bullet()

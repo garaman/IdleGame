@@ -71,7 +71,11 @@ public class MainUI : MonoBehaviour
     private List<TextMeshProUGUI> m_ItemTexts = new List<TextMeshProUGUI>();
     private List<Coroutine> m_ItemCoroutines = new List<Coroutine>();
 
-    
+    [Space(10.0f)]
+    [Header("HeroFrame")]
+    [SerializeField] private UI_Main_Part[] main_Parts;
+    Dictionary<Player, UI_Main_Part> m_Parts = new Dictionary<Player, UI_Main_Part>();
+
     public void Set_BossState()
     {
         StageManager.isDead = false;
@@ -112,16 +116,56 @@ public class MainUI : MonoBehaviour
 
 
 
-        StageManager.m_ReadyEvent += () =>
-        {
-            FadeInOut(true, false);            
-            SliderOBJCheck(false);
-        };
+        StageManager.m_ReadyEvent += () => OnReady();        
         StageManager.m_BossEvent += () => OnBoss();        
         StageManager.m_ClearEvent += () => OnClear();        
         StageManager.m_DeadEvent += () => OnDead();        
     }
 
+    private void OnReady()
+    {
+        FadeInOut(true, false);
+        SliderOBJCheck(false);
+
+        m_Parts.Clear();
+        for(int i = 0; i < main_Parts.Length; i++)
+        {
+            main_Parts[i].Initalize();
+        }
+
+        int indexValue = 0;
+        for (int i = 0; i < BaseManager.Hero.SetHeroInfos.Length; i++)
+        {
+            var data = BaseManager.Hero.SetHeroInfos[i];
+            if(data != null)
+            {
+                indexValue++;
+                main_Parts[i].InitData(data.Data, false);
+                main_Parts[i].transform.SetSiblingIndex(indexValue);
+                m_Parts.Add(HeroSpawner.players[i], main_Parts[i]);
+            }
+        }
+    }
+
+    public void SetHeroData()
+    {
+        int indexValue = 0;
+        for (int i = 0; i < BaseManager.Hero.SetHeroInfos.Length; i++)
+        {
+            var data = BaseManager.Hero.SetHeroInfos[i];
+            if (data != null)
+            {
+                indexValue++;
+                main_Parts[i].InitData(data.Data, true);
+                main_Parts[i].transform.SetSiblingIndex(indexValue);
+            }
+        }
+    }
+
+    public void HeroStateCheck(Player player)
+    {
+        m_Parts[player].StateCheck(player);
+    }
     private void OnBoss()
     {
         SliderOBJCheck(true);        

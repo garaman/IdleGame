@@ -654,6 +654,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7667687310054523542}
+  - {fileID: 8860970908069617141}
   m_Father: {fileID: 5957141673951257114}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5821995748113689917
@@ -869,7 +870,6 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2184998981267161415}
-  - {fileID: 8860970908069617141}
   - {fileID: 7117257463857426811}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -883,7 +883,7 @@ Animator:
   m_GameObject: {fileID: 6362927382951932003}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 461477e10f9e4c4439916bd340dd73f9, type: 2}
+  m_Controller: {fileID: 9100000, guid: 57b5f6924e0814e4894ae41195d84120, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -911,9 +911,12 @@ MonoBehaviour:
   ATK_Speed: 0
   isDead: 0
   m_BulletTransform: {fileID: 0}
+  P_Data: {fileID: 0}
   Provocation_Effect: {fileID: 2981676064123155599, guid: 5dafa82bfec2923428c8dc30f8833a8b, type: 3}
   TrailObj: {fileID: 6450568845988024648, guid: 5dafa82bfec2923428c8dc30f8833a8b, type: 3}
   CH_Name: Berserker
+  MP: 0
+  isMainHero: 0
 --- !u!1 &6698493883590208422
 GameObject:
   m_ObjectHideFlags: 0
@@ -1099,13 +1102,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8047986248962673490}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.059706338, y: 0.01891054, z: 0}
+  m_LocalRotation: {x: 0.5, y: 0.5, z: -0.5, w: -0.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2336502171552836379}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 2521108613594737178}
+  m_LocalEulerAnglesHint: {x: 180, y: 90, z: -90}
 --- !u!33 &168768842677219805
 MeshFilter:
   m_ObjectHideFlags: 0

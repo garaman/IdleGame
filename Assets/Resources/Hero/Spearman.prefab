@@ -498,7 +498,6 @@ Transform:
   m_Children:
   - {fileID: 1624052055350703890}
   - {fileID: 7885108464220776128}
-  - {fileID: 6032754038517015609}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!95 &910447738103108988
@@ -539,9 +538,12 @@ MonoBehaviour:
   ATK_Speed: 0
   isDead: 0
   m_BulletTransform: {fileID: 0}
+  P_Data: {fileID: 0}
   Provocation_Effect: {fileID: 2981676064123155599, guid: 5dafa82bfec2923428c8dc30f8833a8b, type: 3}
   TrailObj: {fileID: 6450568845988024648, guid: 5dafa82bfec2923428c8dc30f8833a8b, type: 3}
   CH_Name: Spearman
+  MP: 0
+  isMainHero: 0
 --- !u!1 &4648419993269997410
 GameObject:
   m_ObjectHideFlags: 0
@@ -855,13 +857,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7023124948240314970}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.049999997, z: -2.0871837e-12}
+  m_LocalRotation: {x: 0.5865075, y: 0.44250235, z: -0.5291574, w: -0.42449167}
+  m_LocalPosition: {x: 0.0012, y: -0.0091, z: -0.0174}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8269134869724351177}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 9132989982182568952}
+  m_LocalEulerAnglesHint: {x: 181.698, y: 85.432, z: -75.63501}
 --- !u!33 &1406297234841163050
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1038,6 +1040,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3794789503852730156}
+  - {fileID: 6032754038517015609}
   m_Father: {fileID: 3855337929076251357}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7849311290205333507

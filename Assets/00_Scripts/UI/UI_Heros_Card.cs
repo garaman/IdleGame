@@ -24,7 +24,7 @@ public class UI_Heros_Card : MonoBehaviour
     {
         m_parent = parentBase;
         m_hero = data;
-        m_character.sprite = Utils.Get_Atlas(data.m_Character_Name + " 1");
+        m_character.sprite = Utils.Get_Atlas(data.m_Character_Name);
         m_rarity.sprite = Utils.Get_Atlas(data.m_Rarity.ToString());
                
         m_character.SetNativeSize();

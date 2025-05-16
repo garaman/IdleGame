@@ -5,13 +5,12 @@ using UnityEngine;
 public class M_LightningThunder : BaseSkill
 {
     private int m_SkillCount = 5;
-    private double ATK;
-
+    
     public override void Set_Skill()
     {
         base.Set_Skill();
-        ATK = Utils.DesignData.stageData.ATK();        
-        StartCoroutine(M_SkillCoroutine());
+        ATK = Utils.DesignData.stageData.ATK();
+        skill_Coroutine = StartCoroutine(M_SkillCoroutine());
     }
 
     IEnumerator M_SkillCoroutine()
@@ -28,6 +27,8 @@ public class M_LightningThunder : BaseSkill
 
             player.GetDamage(damege);
             yield return new WaitForSeconds(0.2f);
-        }        
+        }
+
+        skill_Coroutine = null;
     }
 }

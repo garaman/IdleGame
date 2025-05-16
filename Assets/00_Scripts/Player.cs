@@ -6,12 +6,16 @@ using UnityEngine;
 
 public class Player : Character
 {
-    private hero_Scriptable CH_Data;
+    public hero_Scriptable P_Data;
     public ParticleSystem Provocation_Effect;
     public GameObject TrailObj;
-    public string CH_Name;
+    public string CH_Name;    
+    public float MP;
     Vector3 startPos;
     Quaternion rot;
+
+    public bool isMainHero = false;
+    
 
     protected override void Start()
     {
@@ -30,7 +34,8 @@ public class Player : Character
 
     private void Data_Set(hero_Scriptable data)
     {
-        CH_Data = data;
+        P_Data = data;
+        Bullet_Name = data.m_Character_Name;
         Attack_Range = data.m_Attack_Range;
 
         Set_Status();
@@ -38,8 +43,8 @@ public class Player : Character
 
     public void Set_Status()
     {
-        ATK = BaseManager.Player.Get_ATK(CH_Data.m_Rarity);
-        HP = BaseManager.Player.Get_HP(CH_Data.m_Rarity);
+        ATK = BaseManager.Player.Get_ATK(P_Data.m_Rarity);
+        HP = BaseManager.Player.Get_HP(P_Data.m_Rarity);
     }
 
     private void OnReady()
@@ -71,14 +76,35 @@ public class Player : Character
         AnimatorChange("isIDLE");
     }
 
+    public void GetMp(float mp)
+    {
+        if(isGetSkill) { return; }
+        if (isMainHero) { return; }   
+        
+        MP += mp;
+        if(MP >= P_Data.Max_Mp)
+        {
+            if(GetComponent<BaseSkill>() != null)
+            {                
+                GetComponent<BaseSkill>().Set_Skill();
+                isGetSkill = true;
+                MP = 0;
+            }
+            else
+            {   
+                MP = P_Data.Max_Mp;
+            }
+        }
+        MainUI.instance.HeroStateCheck(this);
+    }
+
     private void Update()
     {
-        if(isDead) { return; }
+        if(isDead) { return; }        
 
         if (StageManager.m_State == Stage_State.Play || StageManager.m_State == Stage_State.BossPlay)
         { 
-            FindClosetTarget(Spawner.m_Monsters.ToArray());
-            
+            FindClosetTarget(Spawner.m_Monsters.ToArray());            
 
             if (m_Target == null)
             {
@@ -116,7 +142,8 @@ public class Player : Character
                 else if(targetDistance <= Attack_Range && isATTACk == false)
                 {
                     isATTACk = true;
-                    AnimatorChange("isATTACK");
+                    GetMp(5.0f);
+                    AnimatorChange("isATTACK");                    
                     Invoke("InitAttack", 1.0f);            
                 }
             }
@@ -149,8 +176,10 @@ public class Player : Character
         if(StageManager.isDead == true) { return; }
 
         base.GetDamage(damage);
+        
+        GetMp(3.0f);
 
-        if(HP <= 0)
+        if (HP <= 0)
         {
             isDead = true;
             DeadEvent();

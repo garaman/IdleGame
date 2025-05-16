@@ -10,12 +10,14 @@ public class Character : MonoBehaviour
     public double ATK;
     public float ATK_Speed;
     public bool isDead = false;
-    
+    public bool isGetSkill = false;
+
     protected float Attack_Range = 3.0f;// 공격 범위
     protected float target_Range = 5.0f;// 추격 범위
     protected bool isATTACk = false;
 
     protected Transform m_Target;
+    protected string Bullet_Name;
     protected CH_Mode ch_Mode;
 
     [SerializeField] protected Transform m_BulletTransform;
@@ -25,12 +27,13 @@ public class Character : MonoBehaviour
     }
     protected void InitAttack() => isATTACk = false;
 
-    protected void AnimatorChange(string temp)
+    public void AnimatorChange(string temp)
     {
+        if(isGetSkill) { return; }
         animator.SetBool("isIDLE", false);
         animator.SetBool("isMOVE", false);
 
-        if (temp == "isATTACK" || temp == "isCLEAR" || temp == "isDEAD")
+        if (temp == "isATTACK" || temp == "isCLEAR" || temp == "isDEAD" || temp == "isSKILL")
         {
             animator.SetTrigger(temp);
             return;
@@ -70,7 +73,7 @@ public class Character : MonoBehaviour
         BaseManager.Pool.Pooling_OBJ("Attack_Helper").Get((value) => 
         {
             value.transform.position = m_BulletTransform.position;
-            value.GetComponent<Bullet>().Init(m_Target, ATK, "CH_01");
+            value.GetComponent<Bullet>().Init(m_Target, ATK, Bullet_Name);
         });
     }
 
