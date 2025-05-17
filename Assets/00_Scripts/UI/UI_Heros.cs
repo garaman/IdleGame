@@ -13,8 +13,8 @@ public class UI_Heros : BaseUI
     public GameObject Card;
 
     private List<UI_Heros_Card> Cards = new List<UI_Heros_Card>();
-    Dictionary<string, hero_Scriptable> m_HeroDic = new Dictionary<string, hero_Scriptable>();
-    hero_Scriptable m_Hero;
+    Dictionary<string, Hero_Scriptable> m_HeroDic = new Dictionary<string, Hero_Scriptable>();
+    Hero_Scriptable m_Hero;
 
     public override bool Init()
     {

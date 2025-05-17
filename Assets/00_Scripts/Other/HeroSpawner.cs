@@ -8,7 +8,7 @@ public class HeroSpawner : MonoBehaviour
     public static Player[] players = new Player[6];
     
 
-    private void Start()
+    private void Awake()
     {
         for(int i = 0; i < transform.childCount; i++)
         {

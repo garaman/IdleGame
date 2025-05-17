@@ -26,6 +26,7 @@ public class Monster : Character
     {        
         HP = Utils.DesignData.stageData.HP();
         ATK = Utils.DesignData.stageData.ATK();
+        ATK_Speed = 1.0f;
         Attack_Range = R_Attack_Range;
         target_Range = Mathf.Infinity;
 

@@ -114,8 +114,6 @@ public class MainUI : MonoBehaviour
             m_ItemCoroutines.Add(null);
         }
 
-
-
         StageManager.m_ReadyEvent += () => OnReady();        
         StageManager.m_BossEvent += () => OnBoss();        
         StageManager.m_ClearEvent += () => OnClear();        

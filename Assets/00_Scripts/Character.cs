@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Character : MonoBehaviour
@@ -11,6 +12,7 @@ public class Character : MonoBehaviour
     public float ATK_Speed;
     public bool isDead = false;
     public bool isGetSkill = false;
+    public bool NonAttackSkill = false;
 
     protected float Attack_Range = 3.0f;// 공격 범위
     protected float target_Range = 5.0f;// 추격 범위
@@ -29,16 +31,25 @@ public class Character : MonoBehaviour
 
     public void AnimatorChange(string temp)
     {
-        if(isGetSkill) { return; }
+        if(NonAttackSkill) 
+        {
+            if (isGetSkill) { return; }
+        }
+        
         animator.SetBool("isIDLE", false);
         animator.SetBool("isMOVE", false);
 
         if (temp == "isATTACK" || temp == "isCLEAR" || temp == "isDEAD" || temp == "isSKILL")
         {
+            if (temp == "isATTACK")
+            {
+                animator.speed = ATK_Speed;
+            }
             animator.SetTrigger(temp);
             return;
-        }       
+        }
 
+        animator.speed = 1.0f;
         animator.SetBool(temp, true);
     }
 

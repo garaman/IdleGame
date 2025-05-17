@@ -17,10 +17,10 @@ public class UI_Heros_Card : MonoBehaviour
     [SerializeField] public GameObject GetOBJ;
 
 
-    public hero_Scriptable m_hero;
+    public Hero_Scriptable m_hero;
     UI_Heros m_parent;
 
-    public void Initalize(hero_Scriptable data, UI_Heros parentBase)
+    public void Initalize(Hero_Scriptable data, UI_Heros parentBase)
     {
         m_parent = parentBase;
         m_hero = data;

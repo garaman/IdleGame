@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Player : Character
 {
-    public hero_Scriptable P_Data;
+    public Hero_Scriptable P_Data;
     public ParticleSystem Provocation_Effect;
     public GameObject TrailObj;
     public string CH_Name;    
@@ -21,7 +21,7 @@ public class Player : Character
     {
         base.Start();
         ch_Mode = CH_Mode.Player;
-        Data_Set(Resources.Load<hero_Scriptable>("Scriptable/Hero/"+CH_Name));
+        Data_Set(Resources.Load<Hero_Scriptable>("Scriptable/Hero/"+CH_Name));
         Spawner.m_Players.Add(this);
 
         StageManager.m_ReadyEvent += OnReady;
@@ -32,11 +32,12 @@ public class Player : Character
         rot = transform.rotation;
     }
 
-    private void Data_Set(hero_Scriptable data)
+    private void Data_Set(Hero_Scriptable data)
     {
         P_Data = data;
         Bullet_Name = data.m_Character_Name;
         Attack_Range = data.m_Attack_Range;
+        ATK_Speed = data.m_Attack_Speed;
 
         Set_Status();
     }
@@ -144,7 +145,7 @@ public class Player : Character
                     isATTACk = true;
                     GetMp(5.0f);
                     AnimatorChange("isATTACK");                    
-                    Invoke("InitAttack", 1.0f);            
+                    Invoke("InitAttack", 1.0f / ATK_Speed);            
                 }
             }
         }

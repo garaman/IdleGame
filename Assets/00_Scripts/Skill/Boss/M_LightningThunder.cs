@@ -9,6 +9,7 @@ public class M_LightningThunder : BaseSkill
     public override void Set_Skill()
     {
         base.Set_Skill();
+        m_Character.NonAttackSkill = true;
         ATK = Utils.DesignData.stageData.ATK();
         skill_Coroutine = StartCoroutine(M_SkillCoroutine());
     }
@@ -16,7 +17,7 @@ public class M_LightningThunder : BaseSkill
     IEnumerator M_SkillCoroutine()
     {
         double damege = ATK / (m_SkillCount / 2);
-
+        
         for (int i = 0; i < m_SkillCount; i++)
         {
             Player player = players[Random.Range(0,players.Length)];
@@ -29,6 +30,6 @@ public class M_LightningThunder : BaseSkill
             yield return new WaitForSeconds(0.2f);
         }
 
-        skill_Coroutine = null;
+        ReturnSkill();
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BaseSkill : MonoBehaviour
 {
+    public GameObject SkillParticle;
     protected Monster[] monsters { get { return Spawner.m_Monsters.ToArray(); } }
     protected Player[] players { get { return Spawner.m_Players.ToArray(); } }
     protected Character m_Character { get { return GetComponent<Character>(); } }
@@ -46,8 +47,10 @@ public class BaseSkill : MonoBehaviour
     }
 
     public virtual void ReturnSkill()
-    {
+    {        
+        m_Character.NonAttackSkill = false;
         m_Character.isGetSkill = false;
         m_Character.AnimatorChange("isIDLE");
+        skill_Coroutine = null;
     }
 }

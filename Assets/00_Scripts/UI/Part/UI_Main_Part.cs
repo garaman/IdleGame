@@ -11,7 +11,7 @@ public class UI_Main_Part : MonoBehaviour
     [SerializeField] private TextMeshProUGUI Hp, Mp;    
     [SerializeField] private GameObject ReadyOBJ;    
 
-    hero_Scriptable m_Data;
+    Hero_Scriptable m_Data;
 
     private void Start()
     {
@@ -38,7 +38,7 @@ public class UI_Main_Part : MonoBehaviour
     {
         BaseCanvas.instance.Get_UI("@Heros");
     }
-    public void InitData(hero_Scriptable data, bool isReady)
+    public void InitData(Hero_Scriptable data, bool isReady)
     {
         m_Data = data;
 

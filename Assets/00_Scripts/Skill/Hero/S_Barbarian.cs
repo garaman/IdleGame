@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class S_Barbarian : BaseSkill
-{
-    public GameObject skillEffect;
+{    
     public override void Set_Skill()
     {
+        m_Character.NonAttackSkill = true;
         m_Character.AnimatorChange("isSKILL");
-        skillEffect.SetActive(true);
-        StartCoroutine(SetSkill_Coroutine());
+        SkillParticle.SetActive(true);
+        skill_Coroutine = StartCoroutine(SetSkill_Coroutine());
         base.Set_Skill();        
     }
 
@@ -26,7 +26,7 @@ public class S_Barbarian : BaseSkill
             }
             yield return new WaitForSeconds(0.5f);
         }
-        skillEffect.SetActive(false);
+        SkillParticle.SetActive(false);        
         ReturnSkill();
     }
 }

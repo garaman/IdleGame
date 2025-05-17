@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 3451796208646834214}
   - component: {fileID: 8088890479504740110}
   m_Layer: 0
-  m_Name: SkillEffect
+  m_Name: SkillParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -949,6 +949,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70dd6b95cb717a64d807710197f6be15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SkillParticle: {fileID: 693423036612294991}
   skillEffect: {fileID: 693423036612294991}
 --- !u!1 &5306276515385368011
 GameObject:

@@ -20,7 +20,7 @@ public class GameDataManager
 
     public void SetHeroInfo()
     {
-        var datas = Resources.LoadAll<hero_Scriptable>("Scriptable/Hero");
+        var datas = Resources.LoadAll<Hero_Scriptable>("Scriptable/Hero");
 
         foreach (var data in datas)
         {
@@ -35,7 +35,7 @@ public class GameDataManager
 
 public class HeroInfo
 {
-    public hero_Scriptable Data;
+    public Hero_Scriptable Data;
     public int Level;
     public int Count;
 }

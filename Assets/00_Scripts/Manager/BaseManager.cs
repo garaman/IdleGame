@@ -34,6 +34,9 @@ public class BaseManager : MonoBehaviour
             Pool.Init(this.transform);
             Data.Init();
             Item.Init();
+
+            Hero.GetHero(1, "Hunter");
+
             ActionCoroutine_Start(() => StageManager.State_Change(Stage_State.Ready), 0.5f);
             
             DontDestroyOnLoad(this.gameObject);
