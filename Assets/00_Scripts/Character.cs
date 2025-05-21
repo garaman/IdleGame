@@ -8,6 +8,7 @@ public class Character : MonoBehaviour
     Animator animator;
     
     public double HP;
+    public double MaxHP;
     public double ATK;
     public float ATK_Speed;
     public bool isDead = false;
@@ -109,5 +110,21 @@ public class Character : MonoBehaviour
         });
 
         HP -= damage;
+    }
+
+    public virtual void Heal(double heal)
+    {
+        BaseManager.Pool.Pooling_OBJ("HIT_TEXT").Get((value) =>
+        {
+            value.GetComponent<HIT_TEXT>().Init(transform.position, heal, isHeal: true);
+        });
+
+        HP += heal;
+
+        if(HP > MaxHP)
+        {  
+            HP = MaxHP; 
+        }
+        
     }
 }

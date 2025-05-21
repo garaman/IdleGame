@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class Item
+{
+    public ItemScriptable data;
+    public int count;
+}
+
 public class ItemManager 
 {
     Dictionary<string, ItemScriptable> ItemDatas = new Dictionary<string, ItemScriptable>();
@@ -12,8 +18,7 @@ public class ItemManager
         
         for(int i = 0; i < datas.Length; i++)
         {
-            ItemDatas.Add(datas[i].name, datas[i]);
-            //Debug.Log(datas[i].ItemName);
+            ItemDatas.Add(datas[i].name, datas[i]);            
         }
     }
 

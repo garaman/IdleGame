@@ -98,6 +98,7 @@ public class Spawner : MonoBehaviour
             //Pool
             var goObj = BaseManager.Pool.Pooling_OBJ("Monster").Get((value) =>
             { 
+                value.gameObject.SetActive(true);
                 value.GetComponent<Monster>().Init();
                 value.transform.position = pos;
                 value.transform.LookAt(Vector3.zero);

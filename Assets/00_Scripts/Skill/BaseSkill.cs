@@ -51,6 +51,30 @@ public class BaseSkill : MonoBehaviour
         m_Character.NonAttackSkill = false;
         m_Character.isGetSkill = false;
         m_Character.AnimatorChange("isIDLE");
-        skill_Coroutine = null;
+
+        if (skill_Coroutine != null)
+        {
+            StopCoroutine(skill_Coroutine);
+            skill_Coroutine = null;
+        }
+    }
+
+    public Character HP_Check()
+    {
+        Character player = null;
+
+        double hpCount = 1.0d;        
+
+        for (int i = 0; i < players.Length; i++)
+        {
+            double hp = players[i].HP / players[i].MaxHP;
+            if( hp < hpCount)
+            {
+                hpCount = hp;
+                player = players[i];
+            }
+        }
+
+        return player;
     }
 }

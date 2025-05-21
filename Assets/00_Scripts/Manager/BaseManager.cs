@@ -14,11 +14,13 @@ public class BaseManager : MonoBehaviour
     private static GameDataManager s_data = new GameDataManager();
     private static ItemManager s_item = new ItemManager();
     private static HeroManager s_hero = new HeroManager();
+    private static InventoryManager s_inventory = new InventoryManager();
     public static PoolManager Pool {  get { return s_pool; } } 
     public static PlayerManager Player {  get { return s_player; } }    
     public static GameDataManager Data { get { return s_data; } }
     public static ItemManager Item { get { return s_item; } }
     public static HeroManager Hero { get { return s_hero; } }
+    public static InventoryManager Inventory { get { return s_inventory; } }
     #endregion
 
     private void Awake()

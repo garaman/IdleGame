@@ -29,7 +29,7 @@ public class UI_Heros : BaseUI
             m_HeroDic.Add(hero.Value.Data.m_Character_Name, hero.Value.Data);
         }        
 
-        var sort_Dictionary = m_HeroDic.OrderBy(x => x.Value.m_Rarity);
+        var sort_Dictionary = m_HeroDic.OrderByDescending(x => x.Value.m_Rarity);
 
         foreach (var data in sort_Dictionary)
         {

@@ -17,7 +17,7 @@ public class HIT_TEXT : MonoBehaviour
         
     }
 
-    public void Init(Vector3 pos, double damage,bool isCritical = false, bool isMonster = false)
+    public void Init(Vector3 pos, double damage,bool isCritical = false, bool isMonster = false , bool isHeal = false)
     {
         pos.x += Random.Range(-0.3f, 0.3f);
         pos.z += Random.Range(-0.3f, 0.3f);
@@ -30,10 +30,14 @@ public class HIT_TEXT : MonoBehaviour
 
         transform.SetParent(BaseCanvas.instance.HOLDER_LAYER(1));
 
-        m_Critical.SetActive(isCritical);        
+        m_Critical.SetActive(isCritical);
         if (isCritical)
         {
             m_text.color = Color.yellow;
+        }
+        else if (isHeal)
+        {
+            m_text.color = Color.green;
         }
 
         BaseManager.instance.Return_Pool(3.0f, this.gameObject, "HIT_TEXT");

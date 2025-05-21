@@ -25,6 +25,7 @@ public class Monster : Character
     public void Init()
     {        
         HP = Utils.DesignData.stageData.HP();
+        MaxHP = Utils.DesignData.stageData.HP();
         ATK = Utils.DesignData.stageData.ATK();
         ATK_Speed = 1.0f;
         Attack_Range = R_Attack_Range;

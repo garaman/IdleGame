@@ -46,6 +46,7 @@ public class Player : Character
     {
         ATK = BaseManager.Player.Get_ATK(P_Data.m_Rarity);
         HP = BaseManager.Player.Get_HP(P_Data.m_Rarity);
+        MaxHP = BaseManager.Player.Get_HP(P_Data.m_Rarity);
     }
 
     private void OnReady()

@@ -42,7 +42,7 @@ public class MainUI : MonoBehaviour
     [Space(10.0f)]
     [Header("MonsterSlider")]    
     [SerializeField] private GameObject m_MonsterSlider_OBJ;
-    [SerializeField] private Slider m_MonsterSlider;
+    [SerializeField] private Image m_MonsterSlider;
     [SerializeField] private TextMeshProUGUI m_MonsterSlider_Text;
 
     [Space(10.0f)]
@@ -74,6 +74,7 @@ public class MainUI : MonoBehaviour
     [Space(10.0f)]
     [Header("HeroFrame")]
     [SerializeField] private UI_Main_Part[] main_Parts;
+    public Image main_HeroSkillFill;
     Dictionary<Player, UI_Main_Part> m_Parts = new Dictionary<Player, UI_Main_Part>();
 
     public void Set_BossState()
@@ -281,7 +282,7 @@ public class MainUI : MonoBehaviour
                 StageManager.State_Change(Stage_State.Boss); 
             }            
         }        
-        m_MonsterSlider.value = value;
+        m_MonsterSlider.fillAmount = value;
         m_MonsterSlider_Text.text = string.Format("{0:0.0}", value * 100.0f) + "%";
     }
 
