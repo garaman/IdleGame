@@ -58,9 +58,18 @@ public class Item_OBJ : MonoBehaviour
     private void Update()
     {
         if(isCheck == false) { return; }
-        
+        if(BaseCanvas.isSave) { return; }
         ItemTextRect.position = Camera.main.WorldToScreenPoint(transform.position);
 
+    }
+
+    private void OnSave()
+    {
+        MainUI.instance.GetItem(m_item);
+        BaseManager.Inventory.GetItem(m_item);
+
+        ItemTextRect.gameObject.SetActive(false);
+        BaseManager.Pool.m_pool_Dictionary["Item_OBJ"].Return(this.gameObject);
     }
 
     public void Init(Vector3 pos, ItemScriptable data)    
@@ -68,6 +77,8 @@ public class Item_OBJ : MonoBehaviour
         m_item = data;
         rarity = m_item.ItemRarity;
         
+        UI_SavingMode.m_OnSving += OnSave;
+
         isCheck = false;
         ItemTextRect.gameObject.SetActive(false);
 
@@ -76,6 +87,10 @@ public class Item_OBJ : MonoBehaviour
         StartCoroutine(SimulaterProjectile(targetPos));
     }
 
+    public void OnDisable()
+    {
+        UI_SavingMode.m_OnSving -= OnSave;
+    }
     IEnumerator SimulaterProjectile(Vector3 pos)
     {
         float target_Distance = Vector3.Distance(transform.position, pos);

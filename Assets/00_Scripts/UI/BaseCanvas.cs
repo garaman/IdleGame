@@ -23,12 +23,18 @@ public class BaseCanvas : MonoBehaviour
 
     public Transform COIN;
     [SerializeField] private Transform LAYER;
-    [SerializeField] private Button Hero_Button, Inventory_Button;
+    [SerializeField] private Button Hero_Button, Inventory_Button, SavingMode_Button;
+    public PopUp_Item popUp = null;
+    public static bool isSave = false;
 
     private void Start()
     {
-        Hero_Button.onClick.AddListener(() => Get_UI("@Heros",true));
-        Inventory_Button.onClick.AddListener(() => Get_UI("@Inventory", false));
+        Hero_Button.onClick.AddListener(() => Get_UI("@Heros", true));
+        Inventory_Button.onClick.AddListener(() => Get_UI("@Inventory"));
+        SavingMode_Button.onClick.AddListener(() => { 
+            Get_UI("@SavingMode"); 
+            isSave = true;
+        });
     }
     private void Update()
     {
@@ -54,7 +60,7 @@ public class BaseCanvas : MonoBehaviour
     {
         if (Fade)
         {
-            MainUI.instance.FadeInOut(false,true,() => GetPopupUI(tmp));
+            MainUI.instance.FadeInOut(false, true, () => GetPopupUI(tmp));
             return;
         }
         GetPopupUI(tmp);
@@ -64,5 +70,12 @@ public class BaseCanvas : MonoBehaviour
     {
         var go = Instantiate(Resources.Load<BaseUI>("UI/" + tmp), transform);
         Utils.UI_Holder.Push(go);
+    }
+
+    public PopUp_Item PopUpItem()
+    {        
+        if(popUp != null) Destroy(popUp.gameObject);
+        popUp = Instantiate(Resources.Load<PopUp_Item>("UI/PopUp_Item"), transform);
+        return popUp;
     }
 }

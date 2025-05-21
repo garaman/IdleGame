@@ -14,5 +14,7 @@ public class UI_Inventory_Part : MonoBehaviour
         Rarity.sprite = Utils.Get_Atlas(item.data.ItemRarity.ToString());
         Icon.sprite = Utils.Get_Atlas(item.data.name);
         Count_Text.text = item.count.ToString();
+
+        GetComponent<PopUp_Handler>().Init(item.data);
     }
 }

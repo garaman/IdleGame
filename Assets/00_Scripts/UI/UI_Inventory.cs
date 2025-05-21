@@ -21,7 +21,7 @@ public class UI_Inventory : BaseUI
 
         foreach (var item in sort_Dictionary)
         {
-            Instantiate(part, content).Init(item.Value);            
+            Instantiate(part, content).Init(item.Value);                        
         }
 
         for(int i = 0; i < m_TopButtons.Length; i++)

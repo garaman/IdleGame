@@ -17,8 +17,19 @@ public class HIT_TEXT : MonoBehaviour
         
     }
 
+    public void OnSave()
+    {
+        ReturnText();
+    }
+
+    private void OnDisable()
+    {
+        UI_SavingMode.m_OnSving -= OnSave;
+    }
     public void Init(Vector3 pos, double damage,bool isCritical = false, bool isMonster = false , bool isHeal = false)
     {
+        UI_SavingMode.m_OnSving += OnSave;
+
         pos.x += Random.Range(-0.3f, 0.3f);
         pos.z += Random.Range(-0.3f, 0.3f);
 
@@ -45,6 +56,8 @@ public class HIT_TEXT : MonoBehaviour
 
     private void Update()
     {
+        if(BaseCanvas.isSave) { return; }
+
         Vector3 targetPos = new Vector3(target.x, target.y + upRange, target.z);
         transform.position = cam.WorldToScreenPoint(targetPos);
         if(upRange <= 0.5f)

@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 8948958017804887359}
   - component: {fileID: 8922000333807637598}
   - component: {fileID: 1328539094066985259}
+  - component: {fileID: 411950157936972843}
   m_Layer: 5
   m_Name: Item
   m_TagString: Untagged
@@ -168,6 +169,19 @@ MonoBehaviour:
   Rarity: {fileID: 8922000333807637598}
   Icon: {fileID: 7883337115928774939}
   Count_Text: {fileID: 7483307124712486353}
+--- !u!114 &411950157936972843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1986507207205723913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9851cff7b9add9a4eaae99eee8dd2fb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 0}
 --- !u!1 &3892090673988983385
 GameObject:
   m_ObjectHideFlags: 0

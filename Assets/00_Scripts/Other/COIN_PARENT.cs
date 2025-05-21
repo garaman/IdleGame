@@ -18,13 +18,31 @@ public class COIN_PARENT : MonoBehaviour
         {
             childs[i] = transform.GetChild(i).GetComponent<RectTransform>();
         }
+       
+    }
+    public void OnSave()
+    {
+        BaseManager.Data.Money += Utils.DesignData.levelData.MONEY();
+        if (Distanc_Boolean_World(0.5f))
+        {
+            BaseManager.Pool.m_pool_Dictionary["COIN_PARENT"].Return(this.gameObject);
+        }
+    }
+
+    private void OnDisable()
+    {
+        UI_SavingMode.m_OnSving -= OnSave;        
     }
 
     public void Init(Vector3 pos)
     {
-        target = pos;
+        UI_SavingMode.m_OnSving += OnSave;
 
+        if (BaseCanvas.isSave) { return; }
+
+        target = pos;        
         transform.position = cam.WorldToScreenPoint(target);
+
         for (int i = 0; i < childs.Length; i++)
         {
             childs[i].anchoredPosition = Vector2.zero;
