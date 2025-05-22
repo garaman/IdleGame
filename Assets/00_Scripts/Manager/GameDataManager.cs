@@ -10,6 +10,9 @@ public class GameDataManager
     public double EXP;
     public double Money;        
 
+    public float[] Buffer_Timer = {0.0f, 0.0f, 0.0f}; // 0 : ATK, 1 : DROP, 2 : CRITICAL
+    public int buffLevel = 0;
+    public int buffCount = 0;
     // 전체 영웅 정보.
     public Dictionary<string, HeroInfo> HeroInfos = new Dictionary<string, HeroInfo>();
 

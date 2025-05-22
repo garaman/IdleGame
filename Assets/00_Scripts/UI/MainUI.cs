@@ -77,6 +77,38 @@ public class MainUI : MonoBehaviour
     public Image main_HeroSkillFill;
     Dictionary<Player, UI_Main_Part> m_Parts = new Dictionary<Player, UI_Main_Part>();
 
+    [Space(10.0f)]
+    [Header("ADS")]
+    [SerializeField] private Image FastLock;
+    [SerializeField] private GameObject FastFrame;
+    [SerializeField] private GameObject[] BuffLock;
+
+
+    public void BuffCheck()
+    {
+        for (int i = 0; i < BaseManager.Data.Buffer_Timer.Length; i++)
+        {
+            BuffLock[i].SetActive(BaseManager.Data.Buffer_Timer[i] > 0.0f ? false : true);
+        }
+    }
+
+    private void TimeCheck()
+    {
+        Time.timeScale = BaseManager.isFast ? 1.5f : 1.0f;
+        FastLock.gameObject.SetActive(!BaseManager.isFast);
+        FastFrame.SetActive(BaseManager.isFast);
+    }
+
+    public void GetFast()
+    {
+        bool Fast = !BaseManager.isFast;
+        BaseManager.isFast = Fast;
+        
+        PlayerPrefs.SetInt("FAST", Fast == true ? 1 : 0);
+
+        TimeCheck();
+    }
+
     public void Set_BossState()
     {
         StageManager.isDead = false;
@@ -108,6 +140,11 @@ public class MainUI : MonoBehaviour
     {
         TextCheck();
         SliderOBJCheck(false);
+
+        BaseManager.isFast = PlayerPrefs.GetInt("FAST") == 1 ? true : false;
+
+        TimeCheck();
+        BuffCheck();
 
         for (int i = 0; i < m_ItemContent.childCount; i++)
         {
@@ -320,7 +357,7 @@ public class MainUI : MonoBehaviour
 
     IEnumerator LagendaryPopUp_Coroutine()
     {
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSecondsRealtime(2.0f);
         isPopup = false;
         m_LagendaryPopUp.SetTrigger("isCLOSE");
     }

@@ -17,6 +17,11 @@ public class BaseSkill : MonoBehaviour
         StageManager.m_DeadEvent += onDead;
     }
 
+    private void OnDestroy()
+    {
+        StageManager.m_DeadEvent -= onDead;
+    }
+
     public virtual void Set_Skill()
     {
 

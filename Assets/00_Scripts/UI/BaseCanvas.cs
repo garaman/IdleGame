@@ -23,8 +23,9 @@ public class BaseCanvas : MonoBehaviour
 
     public Transform COIN;
     [SerializeField] private Transform LAYER;
-    [SerializeField] private Button Hero_Button, Inventory_Button, SavingMode_Button;
-    public PopUp_Item popUp = null;
+    [SerializeField] private Button Hero_Button, Inventory_Button, SavingMode_Button, ADS_Buff_Button;
+
+    [HideInInspector]public PopUp_Item popUp = null;
     public static bool isSave = false;
 
     private void Start()
@@ -35,6 +36,7 @@ public class BaseCanvas : MonoBehaviour
             Get_UI("@SavingMode"); 
             isSave = true;
         });
+        ADS_Buff_Button.onClick.AddListener(() => Get_UI("@ADS_Buffer"));
     }
     private void Update()
     {

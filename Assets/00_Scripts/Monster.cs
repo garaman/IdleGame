@@ -54,7 +54,7 @@ public class Monster : Character
     {
         float current = 0.0f;
         float percent = 0.0f;
-        float start = 0.0f;
+        float start = 0.5f;
         float end = transform.localScale.x;
         while(percent < 1)
         {

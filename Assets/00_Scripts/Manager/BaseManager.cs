@@ -23,9 +23,22 @@ public class BaseManager : MonoBehaviour
     public static InventoryManager Inventory { get { return s_inventory; } }
     #endregion
 
+    public static bool isFast = false;
+
     private void Awake()
     {
         Initailize();
+    }
+
+    private void Update()
+    {
+        for(int i = 0; i < Data.Buffer_Timer.Length; i++)
+        {
+            if (Data.Buffer_Timer[i] > 0.0f)
+            {
+                Data.Buffer_Timer[i] -= Time.deltaTime;
+            }
+        }
     }
 
     private void Initailize()
