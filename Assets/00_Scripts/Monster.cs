@@ -40,7 +40,9 @@ public class Monster : Character
             StartCoroutine(SetSkillCoroutine());
         }
 
-        StartCoroutine(Spawn_Start());        
+        //StartCoroutine(Spawn_Start());
+        isSpawn = true;
+        isDead = false;
     }
 
     IEnumerator SetSkillCoroutine()
@@ -54,7 +56,7 @@ public class Monster : Character
     {
         float current = 0.0f;
         float percent = 0.0f;
-        float start = 0.5f;
+        float start = 0.0f;
         float end = transform.localScale.x;
         while(percent < 1)
         {
@@ -65,8 +67,7 @@ public class Monster : Character
             yield return null;
         }
         yield return new WaitForSeconds(0.3f);        
-        isSpawn = true;
-        isDead = false;
+        
     }
 
     protected override void Bullet()

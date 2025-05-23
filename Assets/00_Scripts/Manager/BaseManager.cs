@@ -10,17 +10,21 @@ public class BaseManager : MonoBehaviour
 
     #region Managers
     private static PoolManager s_pool = new PoolManager();
-    private static PlayerManager s_player = new PlayerManager();    
+    private static PlayerManager s_player = new PlayerManager();
     private static GameDataManager s_data = new GameDataManager();
     private static ItemManager s_item = new ItemManager();
     private static HeroManager s_hero = new HeroManager();
     private static InventoryManager s_inventory = new InventoryManager();
-    public static PoolManager Pool {  get { return s_pool; } } 
-    public static PlayerManager Player {  get { return s_player; } }    
+    private static ADSManager s_ADS = new ADSManager();
+    private static FirebaseManager s_firebase = new FirebaseManager();
+    public static PoolManager Pool { get { return s_pool; } }
+    public static PlayerManager Player { get { return s_player; } }
     public static GameDataManager Data { get { return s_data; } }
     public static ItemManager Item { get { return s_item; } }
     public static HeroManager Hero { get { return s_hero; } }
     public static InventoryManager Inventory { get { return s_inventory; } }
+    public static ADSManager ADS { get { return s_ADS; } }
+    public static FirebaseManager Firebase { get { return s_firebase; } }
     #endregion
 
     public static bool isFast = false;
@@ -32,28 +36,35 @@ public class BaseManager : MonoBehaviour
 
     private void Update()
     {
-        for(int i = 0; i < Data.Buffer_Timer.Length; i++)
+        for (int i = 0; i < Data.Buffer_Timer.Length; i++)
         {
             if (Data.Buffer_Timer[i] > 0.0f)
             {
                 Data.Buffer_Timer[i] -= Time.deltaTime;
             }
         }
+        if(Data.Buffe_x2 > 0.0f)
+        {
+            Data.Buffe_x2 -= Time.deltaTime;
+        }
     }
 
     private void Initailize()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
+
             Pool.Init(this.transform);
+            ADS.Init();
+            Firebase.Init();
             Data.Init();
             Item.Init();
 
             Hero.GetHero(1, "Hunter");
 
             ActionCoroutine_Start(() => StageManager.State_Change(Stage_State.Ready), 0.5f);
-            
+
             DontDestroyOnLoad(this.gameObject);
         }
         else
@@ -61,6 +72,9 @@ public class BaseManager : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
+
+    private void GetReward() => Debug.Log("보상형 광고를 시청하고, 보상을 획득하였습니다.");
 
     public GameObject Instantiate_Path(string path)
     {

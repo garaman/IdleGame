@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -50,5 +51,13 @@ public class Utils
     {
         if (BaseManager.Data.Money >= value) { return true; }
         else { return false; }
+    }
+
+    public static string GetTimer(float timer)
+    {
+        TimeSpan timeSpan = TimeSpan.FromSeconds(timer);
+        string timeString = string.Format("{0:00}:{1:00}", timeSpan.Minutes, timeSpan.Seconds);
+
+        return timeString;
     }
 }

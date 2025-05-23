@@ -10,21 +10,7 @@ using static UnityEditor.Progress;
 public class MainUI : MonoBehaviour
 {
     public static MainUI instance = null;
-    
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-
-            //DontDestroyOnLoad(this.gameObject);
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
-    }
-
+    #region ÇÊµå
     [Header("Default")]
     [SerializeField] private TextMeshProUGUI m_Level_Text;
     [SerializeField] private TextMeshProUGUI m_FightScore_Text;
@@ -32,25 +18,25 @@ public class MainUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI m_LevelUpMoney_Text;
     [SerializeField] private TextMeshProUGUI m_StageCount_Text;
     [SerializeField] private TextMeshProUGUI m_StageType_Text;
-    Color m_StageColor = new Color(0.0f,0.7f, 1.0f,1.0f);
+    Color m_StageColor = new Color(0.0f, 0.7f, 1.0f, 1.0f);
 
     [Space(10.0f)]
-    [Header("Fade")]    
+    [Header("Fade")]
     [SerializeField] private Image m_Fade;
     [SerializeField] private float m_FadeDuration = 0.5f;
 
     [Space(10.0f)]
-    [Header("MonsterSlider")]    
+    [Header("MonsterSlider")]
     [SerializeField] private GameObject m_MonsterSlider_OBJ;
     [SerializeField] private Image m_MonsterSlider;
     [SerializeField] private TextMeshProUGUI m_MonsterSlider_Text;
 
     [Space(10.0f)]
-    [Header("BossSlider")]    
+    [Header("BossSlider")]
     [SerializeField] private GameObject m_BossSlider_OBJ;
     [SerializeField] private Image m_BossSlider_HP;
     [SerializeField] private TextMeshProUGUI m_BossSlider_Text;
-    [SerializeField] private TextMeshProUGUI m_BossSlider_Name;    
+    [SerializeField] private TextMeshProUGUI m_BossSlider_Name;
 
     [Space(10.0f)]
     [Header("BossEnter")]
@@ -82,13 +68,72 @@ public class MainUI : MonoBehaviour
     [SerializeField] private Image FastLock;
     [SerializeField] private GameObject FastFrame;
     [SerializeField] private GameObject[] BuffLock;
+    [SerializeField] private Image x2_Fill;
+    [SerializeField] private TextMeshProUGUI x2_Text;
+    #endregion
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
 
+            //DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
+    private void Start()
+    {
+        TextCheck();
+        SliderOBJCheck(false);
+
+        BaseManager.isFast = PlayerPrefs.GetInt("FAST") == 1 ? true : false;
+
+        TimeCheck();
+        BuffCheck();
+
+        for (int i = 0; i < m_ItemContent.childCount; i++)
+        {
+            m_ItemTexts.Add(m_ItemContent.GetChild(i).GetComponent<TextMeshProUGUI>());
+            m_ItemCoroutines.Add(null);
+        }
+
+        StageManager.m_ReadyEvent += () => OnReady();
+        StageManager.m_BossEvent += () => OnBoss();
+        StageManager.m_ClearEvent += () => OnClear();
+        StageManager.m_DeadEvent += () => OnDead();
+    }
+
+    private void Update()
+    {
+        if(BaseManager.Data.Buffe_x2 > 0.0f)
+        {
+            x2_Fill.fillAmount = BaseManager.Data.Buffe_x2 / 1800.0f;            
+            x2_Text.text = Utils.GetTimer(BaseManager.Data.Buffe_x2);
+        }
+        else
+        {
+            x2_Fill.fillAmount = 0.0f;
+            x2_Text.text = "00:00";
+        }
+    }
 
     public void BuffCheck()
     {
         for (int i = 0; i < BaseManager.Data.Buffer_Timer.Length; i++)
         {
             BuffLock[i].SetActive(BaseManager.Data.Buffer_Timer[i] > 0.0f ? false : true);
+        }
+        if(BaseManager.Data.Buffe_x2 > 0.0f)
+        {
+            x2_Fill.transform.parent.gameObject.SetActive(true);
+        }
+        else
+        {
+            x2_Fill.transform.parent.gameObject.SetActive(false);
         }
     }
 
@@ -102,11 +147,23 @@ public class MainUI : MonoBehaviour
     public void GetFast()
     {
         bool Fast = !BaseManager.isFast;
-        BaseManager.isFast = Fast;
-        
-        PlayerPrefs.SetInt("FAST", Fast == true ? 1 : 0);
+        if(Fast == true)
+        {
+           if(BaseManager.Data.Buffe_x2 <= 0.0f)
+            {
+                BaseManager.ADS.ShowRewardedAd(() => 
+                {                    
+                    BaseManager.Data.Buffe_x2 = 1800.0f;
+                    
+                    BuffCheck();
+                    TimeCheck();
+                });                
 
-        TimeCheck();
+            }           
+        }
+
+        BaseManager.isFast = Fast;
+        PlayerPrefs.SetInt("FAST", Fast == true ? 1 : 0);        
     }
 
     public void Set_BossState()
@@ -136,27 +193,6 @@ public class MainUI : MonoBehaviour
         BossSlider(value, 1.0f);
     }
 
-    private void Start()
-    {
-        TextCheck();
-        SliderOBJCheck(false);
-
-        BaseManager.isFast = PlayerPrefs.GetInt("FAST") == 1 ? true : false;
-
-        TimeCheck();
-        BuffCheck();
-
-        for (int i = 0; i < m_ItemContent.childCount; i++)
-        {
-            m_ItemTexts.Add(m_ItemContent.GetChild(i).GetComponent<TextMeshProUGUI>());
-            m_ItemCoroutines.Add(null);
-        }
-
-        StageManager.m_ReadyEvent += () => OnReady();        
-        StageManager.m_BossEvent += () => OnBoss();        
-        StageManager.m_ClearEvent += () => OnClear();        
-        StageManager.m_DeadEvent += () => OnDead();        
-    }
 
     private void OnReady()
     {

@@ -47,10 +47,8 @@ public class UI_ADS_Buff : BaseUI
         {
             if (BaseManager.Data.Buffer_Timer[i] > 0.0f)
             {                
-                m_Timers_Fill[i].fillAmount = 1.0f - (BaseManager.Data.Buffer_Timer[i] / 1800.0f);
-                TimeSpan timeSpan = TimeSpan.FromSeconds(BaseManager.Data.Buffer_Timer[i]);
-                string timeString = string.Format("{0:00}:{1:00}", timeSpan.Minutes, timeSpan.Seconds);
-                m_Timers_Text[i].text = timeString;
+                m_Timers_Fill[i].fillAmount = 1.0f - (BaseManager.Data.Buffer_Timer[i] / 1800.0f);                
+                m_Timers_Text[i].text = Utils.GetTimer(BaseManager.Data.Buffer_Timer[i]);
             }
             else
             {
@@ -61,16 +59,19 @@ public class UI_ADS_Buff : BaseUI
     }
 
     public void GetBuff(ADSBuff_State state)
-    {        
-        int stateValue = (int)state;
+    {
+        BaseManager.ADS.ShowRewardedAd(() =>
+        {
+            int stateValue = (int)state;
 
-        BaseManager.Data.buffCount++;
+            BaseManager.Data.buffCount++;
 
-        BaseManager.Data.Buffer_Timer[stateValue] = 1800.0f;
-        
-        SetBuff(stateValue, true);
+            BaseManager.Data.Buffer_Timer[stateValue] = 1800.0f;
 
-        MainUI.instance.BuffCheck();
+            SetBuff(stateValue, true);
+
+            MainUI.instance.BuffCheck();
+        });
     }
 
     void SetBuff(int value, bool GetBool)

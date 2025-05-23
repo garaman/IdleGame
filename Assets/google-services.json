@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "888007862593",
+    "project_id": "idleproject-7c124",
+    "storage_bucket": "idleproject-7c124.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:888007862593:android:1bf0c1a2308346be0699c0",
+        "android_client_info": {
+          "package_name": "com.SelfProject.IdleGame"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLwNnHIHEdN9_HbtDVunm-KwczYzi66gQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

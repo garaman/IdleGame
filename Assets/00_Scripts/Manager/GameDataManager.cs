@@ -11,6 +11,7 @@ public class GameDataManager
     public double Money;        
 
     public float[] Buffer_Timer = {0.0f, 0.0f, 0.0f}; // 0 : ATK, 1 : DROP, 2 : CRITICAL
+    public float Buffe_x2 = 0.0f; // 버프 효과 배율.
     public int buffLevel = 0;
     public int buffCount = 0;
     // 전체 영웅 정보.
