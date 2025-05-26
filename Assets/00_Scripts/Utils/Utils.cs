@@ -49,7 +49,7 @@ public class Utils
 
     public static bool Coin_Check(double value)
     {
-        if (BaseManager.Data.Money >= value) { return true; }
+        if (DataManager.gameData.Money >= value) { return true; }
         else { return false; }
     }
 

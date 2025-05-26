@@ -139,7 +139,7 @@ PlayerSettings:
   loadStoreDebugModeEnabled: 0
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
-  bundleVersion: 0.1
+  bundleVersion: 0.1.0
   preloadedAssets:
   - {fileID: 11400000, guid: 5f417663c51399e48b2a287dd09e87c2, type: 2}
   metroInputSource: 0
@@ -163,6 +163,7 @@ PlayerSettings:
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
     Android: com.SelfProject.IdleGame
+    Standalone: com.SelfProject.IdleGame
   buildNumber:
     Standalone: 0
     VisionOS: 0

@@ -11,7 +11,7 @@ public class BaseManager : MonoBehaviour
     #region Managers
     private static PoolManager s_pool = new PoolManager();
     private static PlayerManager s_player = new PlayerManager();
-    private static GameDataManager s_data = new GameDataManager();
+    private static DataManager s_data = new DataManager();
     private static ItemManager s_item = new ItemManager();
     private static HeroManager s_hero = new HeroManager();
     private static InventoryManager s_inventory = new InventoryManager();
@@ -19,7 +19,7 @@ public class BaseManager : MonoBehaviour
     private static FirebaseManager s_firebase = new FirebaseManager();
     public static PoolManager Pool { get { return s_pool; } }
     public static PlayerManager Player { get { return s_player; } }
-    public static GameDataManager Data { get { return s_data; } }
+    public static DataManager Data { get { return s_data; } }
     public static ItemManager Item { get { return s_item; } }
     public static HeroManager Hero { get { return s_hero; } }
     public static InventoryManager Inventory { get { return s_inventory; } }
@@ -28,6 +28,9 @@ public class BaseManager : MonoBehaviour
     #endregion
 
     public static bool isFast = false;
+    public static bool isGameStart = false;
+
+    float SaveTimer = 0.0f;
 
     private void Awake()
     {
@@ -36,16 +39,25 @@ public class BaseManager : MonoBehaviour
 
     private void Update()
     {
-        for (int i = 0; i < Data.Buffer_Timer.Length; i++)
+        if(isGameStart == false)  { return; }
+
+        for (int i = 0; i < DataManager.gameData.Buffer_Timer.Length; i++)
         {
-            if (Data.Buffer_Timer[i] > 0.0f)
+            if (DataManager.gameData.Buffer_Timer[i] > 0.0f)
             {
-                Data.Buffer_Timer[i] -= Time.deltaTime;
+                DataManager.gameData.Buffer_Timer[i] -= Time.deltaTime;
             }
         }
-        if(Data.Buffe_x2 > 0.0f)
+        if(DataManager.gameData.Buffe_x2 > 0.0f)
         {
-            Data.Buffe_x2 -= Time.deltaTime;
+            DataManager.gameData.Buffe_x2 -= Time.deltaTime;
+        }
+
+        SaveTimer += Time.unscaledDeltaTime;
+        if (SaveTimer >= 10.0f)
+        {
+            SaveTimer = 0.0f;
+            Firebase.WriteData();
         }
     }
 
@@ -58,12 +70,8 @@ public class BaseManager : MonoBehaviour
             Pool.Init(this.transform);
             ADS.Init();
             Firebase.Init();
-            Data.Init();
+            
             Item.Init();
-
-            Hero.GetHero(1, "Hunter");
-
-            ActionCoroutine_Start(() => StageManager.State_Change(Stage_State.Ready), 0.5f);
 
             DontDestroyOnLoad(this.gameObject);
         }
@@ -101,5 +109,13 @@ public class BaseManager : MonoBehaviour
     {
         yield return new WaitForSeconds(timer);
         action?.Invoke();
+    }
+
+    private void OnDestroy()
+    {
+        if(isGameStart)
+        {
+            Firebase.WriteData();
+        }        
     }
 }

@@ -105,14 +105,16 @@ public class MainUI : MonoBehaviour
         StageManager.m_BossEvent += () => OnBoss();
         StageManager.m_ClearEvent += () => OnClear();
         StageManager.m_DeadEvent += () => OnDead();
+
+        StageManager.State_Change(Stage_State.Ready);
     }
 
     private void Update()
     {
-        if(BaseManager.Data.Buffe_x2 > 0.0f)
+        if(DataManager.gameData.Buffe_x2 > 0.0f)
         {
-            x2_Fill.fillAmount = BaseManager.Data.Buffe_x2 / 1800.0f;            
-            x2_Text.text = Utils.GetTimer(BaseManager.Data.Buffe_x2);
+            x2_Fill.fillAmount =DataManager.gameData.Buffe_x2 / 1800.0f;            
+            x2_Text.text = Utils.GetTimer(DataManager.gameData.Buffe_x2);
         }
         else
         {
@@ -123,11 +125,11 @@ public class MainUI : MonoBehaviour
 
     public void BuffCheck()
     {
-        for (int i = 0; i < BaseManager.Data.Buffer_Timer.Length; i++)
+        for (int i = 0; i <DataManager.gameData.Buffer_Timer.Length; i++)
         {
-            BuffLock[i].SetActive(BaseManager.Data.Buffer_Timer[i] > 0.0f ? false : true);
+            BuffLock[i].SetActive(DataManager.gameData.Buffer_Timer[i] > 0.0f ? false : true);
         }
-        if(BaseManager.Data.Buffe_x2 > 0.0f)
+        if(DataManager.gameData.Buffe_x2 > 0.0f)
         {
             x2_Fill.transform.parent.gameObject.SetActive(true);
         }
@@ -149,11 +151,11 @@ public class MainUI : MonoBehaviour
         bool Fast = !BaseManager.isFast;
         if(Fast == true)
         {
-           if(BaseManager.Data.Buffe_x2 <= 0.0f)
+           if(DataManager.gameData.Buffe_x2 <= 0.0f)
             {
                 BaseManager.ADS.ShowRewardedAd(() => 
                 {                    
-                    BaseManager.Data.Buffe_x2 = 1800.0f;
+                   DataManager.gameData.Buffe_x2 = 1800.0f;
                     
                     BuffCheck();
                     TimeCheck();
@@ -279,19 +281,19 @@ public class MainUI : MonoBehaviour
 
     public void TextCheck()
     {
-        m_Level_Text.text = "Lv."+(BaseManager.Data.Level +1).ToString();
+        m_Level_Text.text = "Lv."+(DataManager.gameData.Level +1).ToString();
         m_FightScore_Text.text = StringMethod.ToCurrencyString(BaseManager.Player.Get_FightScore());
 
         double levelUpMoneyValue = Utils.DesignData.levelData.MONEY();
         m_LevelUpMoney_Text.text = StringMethod.ToCurrencyString(levelUpMoneyValue) +"G";
         m_LevelUpMoney_Text.color = Utils.Coin_Check(levelUpMoneyValue) ? Color.green : Color.red;
 
-        m_Money_Text.text = StringMethod.ToCurrencyString(BaseManager.Data.Money) + "G";
+        m_Money_Text.text = StringMethod.ToCurrencyString(DataManager.gameData.Money) + "G";
         
         m_StageType_Text.text = StageManager.isDead ? "반복중.." : "진행중..";
         m_StageType_Text.color = StageManager.isDead ? Color.yellow : m_StageColor;
 
-        int stageValue = BaseManager.Data.Stage + 1;
+        int stageValue =DataManager.gameData.Stage + 1;
         int stageForward = (stageValue / 10)+1;
         int stageBack = stageValue % 10;
 

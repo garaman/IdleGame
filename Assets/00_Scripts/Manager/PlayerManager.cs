@@ -12,17 +12,17 @@ public class PlayerManager
     
     public void EXP_UP()
     {
-        if(BaseManager.Data.Money < Get_MONEY()) { return; }
+        if(DataManager.gameData.Money < Get_MONEY()) { return; }
 
-        BaseManager.Data.Money -= Get_MONEY();
-        BaseManager.Data.EXP += Get_EXP();
+       DataManager.gameData.Money -= Get_MONEY();
+       DataManager.gameData.EXP += Get_EXP();
 
-        if(BaseManager.Data.EXP >= Get_MAXEXP())
+        if(DataManager.gameData.EXP >= Get_MAXEXP())
         {
-            BaseManager.Data.Level++;
+           DataManager.gameData.Level++;
             ATK += Get_ATK();
             HP += Get_HP();
-            BaseManager.Data.EXP = 0;
+           DataManager.gameData.EXP = 0;
             //MainUI.instance.TextCheck();
 
             for (int i = 0; i < Spawner.m_Players.Count; i++)
@@ -36,7 +36,7 @@ public class PlayerManager
     public float EXP_percentage()
     {
         float exp = (float)Get_MAXEXP();
-        double currentExp = BaseManager.Data.EXP;
+        double currentExp =DataManager.gameData.EXP;
         
         return (float)currentExp/exp;
     }
@@ -70,7 +70,7 @@ public class PlayerManager
 
     public double Get_HP()
     {
-        return Utils.CalculatedValue(Utils.DesignData.levelData.B_HP, BaseManager.Data.Level, Utils.DesignData.levelData.C_HP);
+        return Utils.CalculatedValue(Utils.DesignData.levelData.B_HP,DataManager.gameData.Level, Utils.DesignData.levelData.C_HP);
     }
 
     public double Get_ATK(Rarity rarity)

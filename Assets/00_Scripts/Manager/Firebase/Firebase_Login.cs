@@ -9,6 +9,7 @@ public partial class FirebaseManager
         if(auth.CurrentUser != null)
         {
             Debug.Log("이미 로그인 되어있습니다." + auth.CurrentUser.UserId);
+            ReadData();
             return;
         }
         auth.SignInAnonymouslyAsync().ContinueWith(task =>
@@ -22,6 +23,8 @@ public partial class FirebaseManager
             FirebaseUser user = task.Result.User;
             // Unique ID 로 생성됨.
             Debug.Log($"GusetLogin 성공. 사용자 ID: {user.UserId}");
+
+            ReadData();
         });
     }
 }

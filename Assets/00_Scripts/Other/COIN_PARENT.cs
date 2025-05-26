@@ -22,7 +22,7 @@ public class COIN_PARENT : MonoBehaviour
     }
     public void OnSave()
     {
-        BaseManager.Data.Money += Utils.DesignData.levelData.MONEY();
+       DataManager.gameData.Money += Utils.DesignData.levelData.MONEY();
         if (Distanc_Boolean_World(0.5f))
         {
             BaseManager.Pool.m_pool_Dictionary["COIN_PARENT"].Return(this.gameObject);
@@ -49,7 +49,7 @@ public class COIN_PARENT : MonoBehaviour
         }
         transform.SetParent(BaseCanvas.instance.HOLDER_LAYER(0));
 
-        BaseManager.Data.Money += Utils.DesignData.levelData.MONEY();
+       DataManager.gameData.Money += Utils.DesignData.levelData.MONEY();
 
         StartCoroutine(Coin_Effect());
     }

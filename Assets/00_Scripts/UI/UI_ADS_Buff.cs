@@ -31,9 +31,9 @@ public class UI_ADS_Buff : BaseUI
             m_Buttons[i].onClick.AddListener(() => { GetBuff((ADSBuff_State)index); });
         }
 
-        for (int i = 0; i < BaseManager.Data.Buffer_Timer.Length; i++)
+        for (int i = 0; i <DataManager.gameData.Buffer_Timer.Length; i++)
         {
-            if (BaseManager.Data.Buffer_Timer[i] > 0.0f)
+            if (DataManager.gameData.Buffer_Timer[i] > 0.0f)
             {
                 SetBuff(i, true);
             }
@@ -43,12 +43,12 @@ public class UI_ADS_Buff : BaseUI
 
     private void Update()
     {
-        for (int i = 0; i < BaseManager.Data.Buffer_Timer.Length; i++)
+        for (int i = 0; i <DataManager.gameData.Buffer_Timer.Length; i++)
         {
-            if (BaseManager.Data.Buffer_Timer[i] > 0.0f)
+            if (DataManager.gameData.Buffer_Timer[i] > 0.0f)
             {                
-                m_Timers_Fill[i].fillAmount = 1.0f - (BaseManager.Data.Buffer_Timer[i] / 1800.0f);                
-                m_Timers_Text[i].text = Utils.GetTimer(BaseManager.Data.Buffer_Timer[i]);
+                m_Timers_Fill[i].fillAmount = 1.0f - (DataManager.gameData.Buffer_Timer[i] / 1800.0f);                
+                m_Timers_Text[i].text = Utils.GetTimer(DataManager.gameData.Buffer_Timer[i]);
             }
             else
             {
@@ -64,9 +64,9 @@ public class UI_ADS_Buff : BaseUI
         {
             int stateValue = (int)state;
 
-            BaseManager.Data.buffCount++;
+           DataManager.gameData.buffCount++;
 
-            BaseManager.Data.Buffer_Timer[stateValue] = 1800.0f;
+           DataManager.gameData.Buffer_Timer[stateValue] = 1800.0f;
 
             SetBuff(stateValue, true);
 

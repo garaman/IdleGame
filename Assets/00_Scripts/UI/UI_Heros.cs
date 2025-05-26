@@ -23,7 +23,7 @@ public class UI_Heros : BaseUI
 
         MainUI.instance.FadeInOut(true, true, null);
 
-        var HeroData = BaseManager.Data.HeroInfos;
+        var HeroData =BaseManager.Data.HeroInfos;
         foreach(var hero in HeroData)
         {
             m_HeroDic.Add(hero.Value.Data.m_Character_Name, hero.Value.Data);
