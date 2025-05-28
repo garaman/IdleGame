@@ -23,14 +23,30 @@ public class BaseCanvas : MonoBehaviour
 
     public Transform COIN;
     [SerializeField] private Transform LAYER;
-    [SerializeField] private Button Hero_Button, Inventory_Button, SavingMode_Button, ADS_Buff_Button;
+    [SerializeField] private Transform BACKLAYER;
+    
+    [Space(10.0f)]
+    [Header("Bottom")]
+    [SerializeField] private Button Hero_Button;
+    [SerializeField] private Button Shop_Button;
+
+    [Space(10.0f)]
+    [Header("Right")]
+    [SerializeField] private Button Inventory_Button;
+    [SerializeField] private Button SavingMode_Button;
+    [SerializeField] private Button ADS_Buff_Button;
 
     [HideInInspector]public PopUp_Item popUp = null;
     public static bool isSave = false;
 
     private void Start()
     {
+        // Bottom UI
         Hero_Button.onClick.AddListener(() => Get_UI("@Heros", true));
+        Shop_Button.onClick.AddListener(() => Get_UI("@Shop", false, true));
+        Shop_Button.onClick.AddListener(() => MainUI.instance.LayerCheck(5));
+
+        // Right UI
         Inventory_Button.onClick.AddListener(() => Get_UI("@Inventory"));
         SavingMode_Button.onClick.AddListener(() => { 
             Get_UI("@SavingMode"); 
@@ -58,19 +74,21 @@ public class BaseCanvas : MonoBehaviour
         return LAYER.GetChild(value);
     }
 
-    public void Get_UI(string tmp, bool Fade = false)
+    public void Get_UI(string tmp, bool Fade = false, bool Back = false)
     {
+        Utils.CloseAllPopupUI();
+
         if (Fade)
         {
             MainUI.instance.FadeInOut(false, true, () => GetPopupUI(tmp));
             return;
         }
-        GetPopupUI(tmp);
+        GetPopupUI(tmp, Back);
     }
 
-    void GetPopupUI(string tmp)
+    void GetPopupUI(string tmp, bool Back = false)
     {
-        var go = Instantiate(Resources.Load<BaseUI>("UI/" + tmp), transform);
+        var go = Instantiate(Resources.Load<BaseUI>("UI/" + tmp), Back ? BACKLAYER : transform);
         Utils.UI_Holder.Push(go);
     }
 

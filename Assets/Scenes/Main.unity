@@ -614,7 +614,7 @@ GameObject:
   - component: {fileID: 61731334}
   - component: {fileID: 61731333}
   m_Layer: 5
-  m_Name: BottomLayout
+  m_Name: HeroBottomLayout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2464,7 +2464,7 @@ GameObject:
   - component: {fileID: 310587837}
   - component: {fileID: 310587836}
   m_Layer: 5
-  m_Name: BottomLayout
+  m_Name: StateBottomLayout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4299,7 +4299,7 @@ GameObject:
   - component: {fileID: 545296832}
   - component: {fileID: 545296831}
   m_Layer: 5
-  m_Name: BottomLayout
+  m_Name: DungonBottomLayout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6094,7 +6094,7 @@ GameObject:
   - component: {fileID: 714963872}
   - component: {fileID: 714963871}
   m_Layer: 5
-  m_Name: BottomLayout
+  m_Name: ShopBottomLayout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8250,7 +8250,7 @@ GameObject:
   - component: {fileID: 1019324352}
   - component: {fileID: 1019324351}
   m_Layer: 5
-  m_Name: BottomLayout
+  m_Name: UpgradeBottomLayout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8522,6 +8522,13 @@ MonoBehaviour:
   - {fileID: 27239274}
   x2_Fill: {fileID: 626014592}
   x2_Text: {fileID: 481156452}
+  Layer_Images:
+  - {fileID: 1823469040}
+  - {fileID: 1040714580}
+  - {fileID: 1743478392}
+  - {fileID: 1896782026}
+  - {fileID: 207335566}
+  - {fileID: 1611273240}
 --- !u!1 &1055973400
 GameObject:
   m_ObjectHideFlags: 0
@@ -10101,6 +10108,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1234764315}
   m_CullTransparentMesh: 1
+--- !u!1 &1260456528
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1260456529}
+  m_Layer: 5
+  m_Name: BackLayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1260456529
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1260456528}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1398869765}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 640}
+  m_SizeDelta: {x: 720, y: 1220}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1264170931
 GameObject:
   m_ObjectHideFlags: 0
@@ -10940,7 +10982,7 @@ Transform:
   m_GameObject: {fileID: 1361643082}
   serializedVersion: 2
   m_LocalRotation: {x: 0.43208575, y: 0, z: 0, w: 0.9018325}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.91, z: -1.13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11194,10 +11236,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2119365636}
-  - {fileID: 386039288}
   - {fileID: 1055973401}
+  - {fileID: 386039288}
   - {fileID: 2121044304}
+  - {fileID: 1260456529}
+  - {fileID: 2119365636}
   m_Father: {fileID: 1042043905}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -13512,7 +13555,7 @@ GameObject:
   - component: {fileID: 1646680726}
   - component: {fileID: 1646680725}
   m_Layer: 5
-  m_Name: BottomLayout
+  m_Name: EquipmentBottomLayout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16151,7 +16194,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   COIN: {fileID: 415533793}
   LAYER: {fileID: 241557012}
+  BACKLAYER: {fileID: 1260456529}
   Hero_Button: {fileID: 61731333}
+  Shop_Button: {fileID: 714963871}
   Inventory_Button: {fileID: 2098401390}
   SavingMode_Button: {fileID: 718874816}
   ADS_Buff_Button: {fileID: 1770011995}

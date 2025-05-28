@@ -16,6 +16,8 @@ public class UI_Heros : BaseUI
     Dictionary<string, Hero_Scriptable> m_HeroDic = new Dictionary<string, Hero_Scriptable>();
     Hero_Scriptable m_Hero;
 
+    [SerializeField] private UI_HeroInfo heroInfoPanel;
+
     public override bool Init()
     {
         InitButtons();
@@ -26,16 +28,18 @@ public class UI_Heros : BaseUI
         var HeroData =BaseManager.Data.HeroInfos;
         foreach(var hero in HeroData)
         {
+            if(hero.Value.Data.m_Rarity == Rarity.None) { continue; }
             m_HeroDic.Add(hero.Value.Data.m_Character_Name, hero.Value.Data);
         }        
 
         var sort_Dictionary = m_HeroDic.OrderByDescending(x => x.Value.m_Rarity);
 
+        
         foreach (var data in sort_Dictionary)
         {
-            var go = Instantiate(Card, Content).GetComponent<UI_Heros_Card>();
-            Cards.Add(go);
-            go.Initalize(data.Value,this);
+            var go = Instantiate(Card, Content).GetComponent<UI_Heros_Card>();            
+            Cards.Add(go);            
+            go.Initalize(data.Value,this);            
         }
 
         
@@ -82,10 +86,9 @@ public class UI_Heros : BaseUI
         for(int i = 0; i < RenderManager.instance.Hero.circles.Length; i++)
         {
             int index = i;  
-            var go = new GameObject("Button").AddComponent<Button>();
-            go.onClick.AddListener(() => SetHeroButton(index));
+            var go = new GameObject("Button").AddComponent<Button>();            
             go.transform.SetParent(transform);
-
+            go.onClick.AddListener(() => SetHeroButton(index));
             go.gameObject.AddComponent<Image>();
             //go.gameObject.AddComponent<RectTransform>();
 
@@ -101,7 +104,7 @@ public class UI_Heros : BaseUI
         }
     }
 
-    private void SetHeroButton(int value)
+    public void SetHeroButton(int value)
     {
         BaseManager.Hero.GetHero(value, m_Hero.m_Character_Name);
         RenderManager.instance.Hero.GetParticle(false);
@@ -113,6 +116,27 @@ public class UI_Heros : BaseUI
             Cards[i].GetHeroCheck();
         }
         MainUI.instance.SetHeroData();
+    }
+
+    public void GetHeroInfo(Hero_Scriptable data)
+    {
+        heroInfoPanel.gameObject.SetActive(true);
+
+        heroInfoPanel.heroRarity.sprite = Utils.Get_Atlas(data.m_Rarity.ToString());
+        heroInfoPanel.heroIcon.sprite = Utils.Get_Atlas(data.name);        
+        heroInfoPanel.heroNameText.text = data.m_Character_Name;
+        heroInfoPanel.heroDesText.text = "";
+        heroInfoPanel.rarityText.text = Utils.String_Color_Rarity(data.m_Rarity) + data.m_Rarity.ToString() + "</color>";
+
+        heroInfoPanel.fightScoreText.text = "";
+        heroInfoPanel.ATKScoreText.text = StringMethod.ToCurrencyString(BaseManager.Player.Get_ATK(data.m_Rarity));
+        heroInfoPanel.HpScoreText.text = StringMethod.ToCurrencyString(BaseManager.Player.Get_HP(data.m_Rarity));
+
+        heroInfoPanel.heroLevelText.text = "Lv."+(BaseManager.Data.Infos[data.name].Level +1).ToString();
+        heroInfoPanel.heroCountText.text = "("+BaseManager.Data.Infos[data.name].Count.ToString()+"/" + "5)";
+        heroInfoPanel.sliderFill.fillAmount = (float)BaseManager.Data.Infos[data.name].Count / 5.0f;
+
+        
     }
 
 }

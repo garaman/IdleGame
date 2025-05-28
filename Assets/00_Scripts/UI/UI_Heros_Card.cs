@@ -15,15 +15,21 @@ public class UI_Heros_Card : MonoBehaviour
 
     [SerializeField] public GameObject LockOBJ;
     [SerializeField] public GameObject GetOBJ;
-
+    [SerializeField] public Button onClickButton;
 
     public Hero_Scriptable m_hero;
     UI_Heros m_parent;
 
     public void Initalize(Hero_Scriptable data, UI_Heros parentBase)
-    {
+    {        
         m_parent = parentBase;
         m_hero = data;
+        
+        int levelCount = (BaseManager.Data.Infos[data.m_Character_Name].Level+1) * 5;
+        m_slider.fillAmount = (float)BaseManager.Data.Infos[data.m_Character_Name].Count / (float)levelCount;
+        m_Count.text = BaseManager.Data.Infos[data.m_Character_Name].Count.ToString() + " / " + levelCount.ToString();
+        m_Level.text = "Lv." + (BaseManager.Data.Infos[data.m_Character_Name].Level+1).ToString();
+
         m_character.sprite = Utils.Get_Atlas(data.m_Character_Name);
         m_rarity.sprite = Utils.Get_Atlas(data.m_Rarity.ToString());
                
@@ -50,10 +56,15 @@ public class UI_Heros_Card : MonoBehaviour
         GetOBJ.SetActive(isGet);
     }
 
-    public void OnClickHeroCard()
+    public void ClickButton()
     {
         m_parent.SetClick(this);
         RenderManager.instance.Hero.GetParticle(true);
+    }
 
+
+    public void OnClickHeroCard()
+    {
+        m_parent.GetHeroInfo(m_hero);
     }
 }

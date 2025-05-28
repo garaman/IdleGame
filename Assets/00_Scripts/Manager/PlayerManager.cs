@@ -75,11 +75,13 @@ public class PlayerManager
 
     public double Get_ATK(Rarity rarity)
     {
+        if (rarity == Rarity.None) { return ATK; }
         return ATK * ((int)rarity + 1);
     }
 
     public double Get_HP(Rarity rarity)
     {
+        if (rarity == Rarity.None) { return HP; } 
         return HP * ((int)rarity + 1);
     }
 

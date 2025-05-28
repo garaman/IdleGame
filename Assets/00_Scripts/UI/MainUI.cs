@@ -70,6 +70,10 @@ public class MainUI : MonoBehaviour
     [SerializeField] private GameObject[] BuffLock;
     [SerializeField] private Image x2_Fill;
     [SerializeField] private TextMeshProUGUI x2_Text;
+
+    [Space(10.0f)]
+    [Header("LayerButtons")]
+    [SerializeField] private Transform[] Layer_Images;
     #endregion
     private void Awake()
     {
@@ -123,6 +127,42 @@ public class MainUI : MonoBehaviour
         }
     }
 
+    public void LayerCheck(int value)
+    {
+        if(value != -1)
+        {
+            StartCoroutine(ImageMoveCoroutine(value));
+        }        
+
+        for (int i = 0; i < Layer_Images.Length; i++)
+        {
+            if(value != i && Layer_Images[i].transform.localScale.x >= 1.3f)
+            {
+                StartCoroutine(ImageMoveCoroutine(i, true));
+            }
+        }
+    }
+
+    IEnumerator ImageMoveCoroutine(int value, bool ScaleDown = false)
+    {
+        float current = 0.0f;
+        float percent = 0.0f;
+        float start = ScaleDown ? 80.0f : 45.0f;
+        float end = ScaleDown ? 45.0f : 80.0f;
+        float startScale = ScaleDown ? 1.5f : 1.0f;
+        float endScale = ScaleDown ? 1.0f : 1.5f;
+
+        while (percent < 1.0f)
+        {
+            current += Time.unscaledDeltaTime;
+            percent = current / 0.2f;
+            float LerpYPos = Mathf.Lerp(start, end, percent);
+            float lerpScale = Mathf.Lerp(startScale, endScale, percent);
+            Layer_Images[value].localPosition = new Vector2(Layer_Images[value].localPosition.x, LerpYPos);
+            Layer_Images[value].localScale = new Vector3(lerpScale, lerpScale, 1.0f);
+            yield return null;
+        }
+    }
     public void BuffCheck()
     {
         for (int i = 0; i <DataManager.gameData.Buffer_Timer.Length; i++)

@@ -5,7 +5,8 @@ public enum Rarity
     UnCommon,
     Rare,
     Hero,
-    Legendary
+    Legendary,
+    None
 }
 
 public enum CH_Mode

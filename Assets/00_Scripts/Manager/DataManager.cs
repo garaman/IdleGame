@@ -9,11 +9,15 @@ public class GameData
 
     public double EXP;
     public double Money;
+    public double Cristal;
 
     public float[] Buffer_Timer = { 0.0f, 0.0f, 0.0f }; // 0 : ATK, 1 : DROP, 2 : CRITICAL
     public float Buffe_x2 = 0.0f; // 버프 효과 배율.
     public int buffLevel = 0;
     public int buffCount = 0;
+
+    // Shop 관련 정보.    
+    public int HeroSummon_Count = 0; // 소환 횟수.
 }
 
 public class HeroInfo
@@ -40,6 +44,20 @@ public class DataManager
     public void Init()
     {
         SetHeroInfo();
+    }
+
+    public Hero_Scriptable Get_Rarity_Hero(Rarity rarity)
+    {
+        List<Hero_Scriptable> list= new List<Hero_Scriptable>();
+
+        foreach (var hero in HeroInfos.Values)
+        {
+            if (hero.Data.m_Rarity == rarity)
+            {
+                list.Add(hero.Data);
+            }
+        }
+        return list[Random.Range(0,list.Count)];
     }
 
     public void SetHeroInfo()
