@@ -16,10 +16,9 @@ public partial class FirebaseManager
             {
                 auth = FirebaseAuth.DefaultInstance;
                 currentUser = auth.CurrentUser;
-                Debug.Log("Firebase Auth Initialized");
-
+                
                 reference = FirebaseDatabase.DefaultInstance.RootReference;
-                Debug.Log("Firebase Database Initialized");
+                
 
                 GuestLogin();
             }

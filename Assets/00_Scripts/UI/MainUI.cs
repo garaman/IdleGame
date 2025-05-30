@@ -124,7 +124,7 @@ public class MainUI : MonoBehaviour
         {
             x2_Fill.fillAmount = 0.0f;
             x2_Text.text = "00:00";
-        }
+        }        
     }
 
     public void LayerCheck(int value)

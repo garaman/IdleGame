@@ -64,7 +64,7 @@ public class BaseCanvas : MonoBehaviour
             }
             else
             {
-                Debug.Log("게임 종료 팝업 노출"); // 추후 작업예정.
+                Get_UI("@BackButton");                
             }
         }
     }
@@ -97,5 +97,10 @@ public class BaseCanvas : MonoBehaviour
         if(popUp != null) Destroy(popUp.gameObject);
         popUp = Instantiate(Resources.Load<PopUp_Item>("UI/PopUp_Item"), transform);
         return popUp;
+    }
+
+    public UI_ToastPopUp Get_Toast()
+    {
+        return Instantiate(Resources.Load<UI_ToastPopUp>("UI/@ToastPopup"),transform);
     }
 }

@@ -68,12 +68,13 @@ public class BaseSkill : MonoBehaviour
     {
         Character player = null;
 
-        double hpCount = 1.0d;        
+        double hpCount = 1.0d;
 
         for (int i = 0; i < players.Length; i++)
         {
             double hp = players[i].HP / players[i].MaxHP;
-            if( hp < hpCount)
+            //Debug.Log(hp + "/" + hpCount + "/" + players[i].name);
+            if ( hp <= hpCount)
             {
                 hpCount = hp;
                 player = players[i];

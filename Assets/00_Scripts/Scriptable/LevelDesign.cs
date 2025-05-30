@@ -30,6 +30,9 @@ public class LevelData
     public double EXP() => Utils.CalculatedValue(B_EXP,DataManager.gameData.Level, C_EXP);
     public double MAXEXP() => Utils.CalculatedValue(B_MAXEXP,DataManager.gameData.Level, C_MAXEXP);
     public double MONEY() => Utils.CalculatedValue(B_MONEY,DataManager.gameData.Level, C_MONEY);
+
+    public double SetATK(int level) => Utils.CalculatedValue(B_ATK,level, C_ATK);
+    public double SetHP(int level) => Utils.CalculatedValue(B_HP, level, C_HP);
 }
 
 [System.Serializable]

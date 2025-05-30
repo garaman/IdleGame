@@ -21,6 +21,7 @@ public class Player : Character
     {
         base.Start();
         ch_Mode = CH_Mode.Player;
+
         Data_Set(Resources.Load<Hero_Scriptable>("Scriptable/Hero/"+CH_Name));
         Spawner.m_Players.Add(this);
 
@@ -39,14 +40,15 @@ public class Player : Character
         Attack_Range = data.m_Attack_Range;
         ATK_Speed = data.m_Attack_Speed;
 
+        BaseManager.Player.SetLevelState();
         Set_Status();
     }
 
     public void Set_Status()
     {
-        ATK = BaseManager.Player.Get_ATK(P_Data.m_Rarity);
-        HP = BaseManager.Player.Get_HP(P_Data.m_Rarity);
-        MaxHP = BaseManager.Player.Get_HP(P_Data.m_Rarity);
+        ATK = BaseManager.Player.Get_ATK(P_Data.m_Rarity, BaseManager.Data.HeroInfos[P_Data.name]);
+        HP = BaseManager.Player.Get_HP(P_Data.m_Rarity, BaseManager.Data.HeroInfos[P_Data.name]);
+        MaxHP = HP;
     }
 
     private void OnReady()

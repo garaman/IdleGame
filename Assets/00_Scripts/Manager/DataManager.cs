@@ -44,6 +44,7 @@ public class DataManager
     public void Init()
     {
         SetHeroInfo();
+        CheckInfo();
     }
 
     public Hero_Scriptable Get_Rarity_Hero(Rarity rarity)
@@ -66,11 +67,8 @@ public class DataManager
 
         foreach (var data in datas)
         {
-            var hero = new HeroInfo();
-            hero.Data = data;
-
             Info h_info = new Info();
-            if(Infos.ContainsKey(data.name))
+            if (Infos.ContainsKey(data.name))
             {
                 h_info = Infos[data.name]; // 기존 정보가 있다면 가져옴.
             }
@@ -79,9 +77,19 @@ public class DataManager
                 Infos.Add(data.name, h_info); // 없다면 새로 추가.
             }
 
+            var hero = new HeroInfo();
+            hero.Data = data;
             hero.info = h_info;
 
             HeroInfos.Add(data.name, hero);
+        }
+    }
+
+    public void CheckInfo()
+    {
+        foreach (var hero in HeroInfos)
+        {
+            hero.Value.info = Infos[hero.Value.Data.name];
         }
     }
 }

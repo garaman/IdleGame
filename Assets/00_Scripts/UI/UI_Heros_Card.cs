@@ -17,7 +17,10 @@ public class UI_Heros_Card : MonoBehaviour
     [SerializeField] public GameObject GetOBJ;
     [SerializeField] public Button onClickButton;
 
-    public Hero_Scriptable m_hero;
+    [SerializeField] private GameObject plus, minus;
+    [SerializeField] public Animator Effect;
+
+    [HideInInspector] public Hero_Scriptable m_hero;
     UI_Heros m_parent;
 
     public void Initalize(Hero_Scriptable data, UI_Heros parentBase)
@@ -40,6 +43,17 @@ public class UI_Heros_Card : MonoBehaviour
         GetHeroCheck();
     }
 
+    public void TextCheck()
+    {
+        int levelCount = (BaseManager.Data.Infos[m_hero.m_Character_Name].Level + 1) * 5;
+        m_slider.fillAmount = (float)BaseManager.Data.Infos[m_hero.m_Character_Name].Count / (float)levelCount;
+        m_Count.text = BaseManager.Data.Infos[m_hero.m_Character_Name].Count.ToString() + " / " + levelCount.ToString();
+        m_Level.text = "Lv." + (BaseManager.Data.Infos[m_hero.m_Character_Name].Level + 1).ToString();
+    }
+    public void EffectStart()
+    {
+        Effect.SetTrigger("isUpgrade");
+    }
     public void GetHeroCheck()
     {
         bool isGet = false;
@@ -54,12 +68,14 @@ public class UI_Heros_Card : MonoBehaviour
             }
         }
         GetOBJ.SetActive(isGet);
+        plus.SetActive(!isGet);
+        minus.SetActive(isGet);
     }
 
     public void ClickButton()
     {
-        m_parent.SetClick(this);
         RenderManager.instance.Hero.GetParticle(true);
+        m_parent.SetClick(this);        
     }
 
 

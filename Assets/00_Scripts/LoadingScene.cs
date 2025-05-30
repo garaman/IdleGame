@@ -65,6 +65,7 @@ public class LoadingScene : MonoBehaviour
 
     public void LaodingMain()
     {
+        Debug.Log("LaodingStart");
         StartCoroutine(LoadDataCoroutine());
     }
 

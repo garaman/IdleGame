@@ -6,8 +6,8 @@ public class RenderHero : MonoBehaviour
 {
     public Transform[] circles;
     public Transform pivot;
-    public GameObject[] particles;
-    public bool[] GetHero = new bool[6];
+    public GameObject[] particles;    
+    private List<GameObject> HeroOBJ = new List<GameObject>();
 
     public void GetParticle(bool m_B)
     {
@@ -19,14 +19,20 @@ public class RenderHero : MonoBehaviour
 
     public void InitHero()
     {
+        for (int i = 0; HeroOBJ.Count > i; i++)
+        {            
+            Destroy(HeroOBJ[i]);
+        }
+        HeroOBJ.Clear();
+
         for (int i = 0; i < BaseManager.Hero.SetHeroInfos.Length; i++)
         {
-            if (BaseManager.Hero.SetHeroInfos[i] != null && GetHero[i] == false)
-            {
-                GetHero[i] = true;
+            if (BaseManager.Hero.SetHeroInfos[i] != null)
+            {                
                 string temp = BaseManager.Hero.SetHeroInfos[i].Data.m_Character_Name;
                 var go = Instantiate(Resources.Load<GameObject>("Hero/" + temp));
-                                
+                HeroOBJ.Add(go);
+
                 ChageLayer(go, "RenderLayer");
 
                 go.transform.SetParent(transform);

@@ -60,7 +60,7 @@ public partial class FirebaseManager
                     
                     DataManager.gameData = data; // 읽어온 데이터를 GameData에 저장                   
 
-                    BaseManager.Data.Init(); // 데이터 읽기 성공 후 초기화
+                    //BaseManager.Data.Init(); // 데이터 읽기 성공 후 초기화
                     LoadingScene.Instance.LaodingMain(); // 데이터 읽기 성공 후 메인 씬 로딩 시작
                 }
                 else
@@ -68,7 +68,7 @@ public partial class FirebaseManager
                     GameData data = new GameData();
                     DataManager.gameData = data; // 신규 데이터를 GameData에 저장
 
-                    BaseManager.Data.Init(); // 초기 데이터 생성 성공 후 초기화
+                    //BaseManager.Data.Init(); // 초기 데이터 생성 성공 후 초기화
                     LoadingScene.Instance.LaodingMain(); // 데이터 읽기 성공 후 메인 씬 로딩 시작                    
                 }
             }

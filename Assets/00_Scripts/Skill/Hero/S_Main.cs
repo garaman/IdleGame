@@ -17,11 +17,16 @@ public class S_Main : BaseSkill
         m_Character.AnimatorChange("isSKILL");
 
         var character = HP_Check();
-        m_Character.transform.LookAt(character.transform.position);
+        if (character != null)
+        {
+            m_Character.transform.LookAt(character.transform.position);
+            character.Heal(SkillDamage(110));
 
-        character.Heal(SkillDamage(110));
-        SkillParticle.gameObject.SetActive(true);
-        SkillParticle.transform.position = character.transform.position;
+            SkillParticle.SetActive(true);
+            SkillParticle.transform.position = character.transform.position;
+            SkillParticle.GetComponent<ParticleSystem>().Play();
+        }
+
         base.Set_Skill();
 
         Invoke("ReturnSkill",0.5f);
@@ -41,7 +46,7 @@ public class S_Main : BaseSkill
     IEnumerator SetSkill_Coroutine(float value)
     {
         float timer = value;
-        while (value > 0.0f)
+        while (timer > 0.0f)
         {
             timer -= Time.deltaTime;
             MainUI.instance.main_HeroSkillFill.fillAmount = timer/value;

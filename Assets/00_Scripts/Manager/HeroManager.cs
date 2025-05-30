@@ -11,4 +11,9 @@ public class HeroManager
     {
        SetHeroInfos[value] = BaseManager.Data.HeroInfos[heroName];
     }
+
+    public void DisableHero(int value)
+    {
+        SetHeroInfos[value] = null; 
+    }
 }
