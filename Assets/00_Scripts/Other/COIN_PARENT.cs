@@ -49,7 +49,7 @@ public class COIN_PARENT : MonoBehaviour
         }
         transform.SetParent(BaseCanvas.instance.HOLDER_LAYER(0));
 
-       DataManager.gameData.Money += Utils.DesignData.levelData.MONEY();
+       DataManager.gameData.Money += Utils.DesignData.stageData.MONEY();
 
         StartCoroutine(Coin_Effect());
     }

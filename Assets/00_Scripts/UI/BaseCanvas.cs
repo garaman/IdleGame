@@ -28,6 +28,7 @@ public class BaseCanvas : MonoBehaviour
     [Space(10.0f)]
     [Header("Bottom")]
     [SerializeField] private Button Hero_Button;
+    [SerializeField] private Button Relic_Button;
     [SerializeField] private Button Shop_Button;
 
     [Space(10.0f)]
@@ -41,10 +42,19 @@ public class BaseCanvas : MonoBehaviour
 
     private void Start()
     {
+        if(Utils.TimerCheck() >=  10.0d)
+        {
+            Get_UI("@OffLine");
+        }
         // Bottom UI
         Hero_Button.onClick.AddListener(() => Get_UI("@Heros", true));
+
+        Relic_Button.onClick.AddListener(() => Get_UI("@Relic", false, true));
+        Relic_Button.onClick.AddListener(() => MainUI.instance.LayerCheck(2));
+
         Shop_Button.onClick.AddListener(() => Get_UI("@Shop", false, true));
         Shop_Button.onClick.AddListener(() => MainUI.instance.LayerCheck(5));
+        
 
         // Right UI
         Inventory_Button.onClick.AddListener(() => Get_UI("@Inventory"));

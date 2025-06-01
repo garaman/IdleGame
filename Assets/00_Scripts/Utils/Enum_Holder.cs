@@ -25,3 +25,9 @@ public enum Stage_State
     Clear,
     Dead
 }
+
+public enum ItemType
+{
+    Consumable,
+    Equipment
+}

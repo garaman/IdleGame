@@ -17,7 +17,7 @@ public class Item_OBJ : MonoBehaviour
     Rarity rarity;
     bool isCheck = false;
 
-    ItemScriptable m_item;
+    Item_Scriptable m_item;
     void RarityCheck()
     {
         isCheck = true;
@@ -48,7 +48,7 @@ public class Item_OBJ : MonoBehaviour
         m_Loot.Play();
 
         MainUI.instance.GetItem(m_item);   
-        BaseManager.Inventory.GetItem(m_item);
+        BaseManager.Inventory.GetItem(m_item.name);
 
         yield return new WaitForSeconds(0.5f);
 
@@ -66,13 +66,13 @@ public class Item_OBJ : MonoBehaviour
     private void OnSave()
     {
         MainUI.instance.GetItem(m_item);
-        BaseManager.Inventory.GetItem(m_item);
+        BaseManager.Inventory.GetItem(m_item.name);
 
         ItemTextRect.gameObject.SetActive(false);
         BaseManager.Pool.m_pool_Dictionary["Item_OBJ"].Return(this.gameObject);
     }
 
-    public void Init(Vector3 pos, ItemScriptable data)    
+    public void Init(Vector3 pos, Item_Scriptable data)    
     {
         m_item = data;
         rarity = m_item.ItemRarity;

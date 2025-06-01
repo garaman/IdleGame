@@ -24,7 +24,7 @@ public class PopUp_Item : MonoBehaviour
         }
     }
 
-    public void Item_PopUp(ItemScriptable item, Vector2 pos)
+    public void Item_PopUp(Item_Scriptable item, Vector2 pos)
     {
         rect.pivot = PivotPoint(pos);
         rect.anchoredPosition = pos;

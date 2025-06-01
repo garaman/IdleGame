@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class InventoryManager
 {
-    public Dictionary<string, Item> ItemList = new Dictionary<string, Item>();
-
-    public void GetItem(ItemScriptable item)
+    public void GetItem(string itemName, int value = 1)
     {
-        if (ItemList.ContainsKey(item.name))
+
+        if (BaseManager.Data.ItemInfos.ContainsKey(itemName))
         {
-            ItemList[item.name].count++;
+            BaseManager.Data.ItemInfos[itemName].Count += value;
         }
         else
         {
-            ItemList.Add(item.name, new Item { data = item, count = 1 });
+            Info iteminfo = new Info();
+            iteminfo.Count = value;
+
+            BaseManager.Data.ItemInfos.Add(itemName, iteminfo);            
         }
     }
     

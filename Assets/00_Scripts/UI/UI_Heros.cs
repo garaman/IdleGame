@@ -16,11 +16,11 @@ public class UI_Heros : BaseUI
     Dictionary<string, Hero_Scriptable> m_HeroDic = new Dictionary<string, Hero_Scriptable>();
     Hero_Scriptable m_Hero;
 
-    [SerializeField] private UI_HeroInfo heroInfoPanel;    
+    [SerializeField] private UI_HeroInfo heroInfo;    
 
-    public void UpgradeButton(HeroInfo hero) 
+    public void UpgradeButton(Hero_Scriptable hero) 
     {
-        Info info = BaseManager.Data.Infos[hero.Data.name];
+        Info info = BaseManager.Data.HeroInfos[hero.name];
 
         int value = (info.Level+1) * 5;
         if (info.Count >= value)
@@ -29,10 +29,10 @@ public class UI_Heros : BaseUI
             info.Level++;
         }
 
-        GetHeroInfo(hero.Data);
+        GetHeroInfo(hero);
         foreach (var card in Cards)
         {
-            if(card.m_hero == hero.Data)
+            if(card.m_hero == hero)
             {
                 card.EffectStart();
                 card.TextCheck();
@@ -52,7 +52,7 @@ public class UI_Heros : BaseUI
         bool isUpgraded = false;
         foreach (var hero in m_HeroDic)
         {
-            Info info = BaseManager.Data.Infos[hero.Key];
+            Info info = BaseManager.Data.HeroInfos[hero.Key];
                         
             int value = (info.Level + 1) * 5;
             if (info.Count >= value)
@@ -87,11 +87,11 @@ public class UI_Heros : BaseUI
 
         MainUI.instance.FadeInOut(true, true, null);
 
-        var HeroData =BaseManager.Data.HeroInfos;
+        var HeroData =BaseManager.Data.HeroData;
         foreach(var hero in HeroData)
         {
-            if(hero.Value.Data.m_Rarity == Rarity.None) { continue; }
-            m_HeroDic.Add(hero.Value.Data.m_Character_Name, hero.Value.Data);
+            if(hero.Value.m_Rarity == Rarity.None) { continue; }
+            m_HeroDic.Add(hero.Value.m_Character_Name, hero.Value);
         }        
 
         var sort_Dictionary = m_HeroDic.OrderByDescending(x => x.Value.m_Rarity);
@@ -138,12 +138,12 @@ public class UI_Heros : BaseUI
         }
         else
         {            
-            for (int i = 0; i < BaseManager.Hero.SetHeroInfos.Length; i++)
+            for (int i = 0; i < BaseManager.Data.SetHeroData.Length; i++)
             {
-                var data = BaseManager.Hero.SetHeroInfos[i];
+                var data = BaseManager.Data.SetHeroData[i];
                 if (data != null)
                 {
-                    if (data.Data == s_Card.m_hero)
+                    if (data == s_Card.m_hero)
                     {
                         BaseManager.Hero.DisableHero(i);
                         HeroInitalize();
@@ -191,32 +191,28 @@ public class UI_Heros : BaseUI
 
 
     public void GetHeroInfo(Hero_Scriptable data)
-    {
-        HeroInfo hero = BaseManager.Data.HeroInfos[data.name];
-        float LevelUpCount = (BaseManager.Data.Infos[data.name].Level + 1) * 5;
+    {        
+        Info heroinfo = BaseManager.Data.HeroInfos[data.name];
+        float LevelUpCount = BaseManager.Hero.LevelMaxCount(heroinfo);
 
-        heroInfoPanel.gameObject.SetActive(true);
+        heroInfo.gameObject.SetActive(true);
 
-        heroInfoPanel.heroRarity.sprite = Utils.Get_Atlas(data.m_Rarity.ToString());
-        heroInfoPanel.heroIcon.sprite = Utils.Get_Atlas(data.name);        
-        heroInfoPanel.heroNameText.text = data.m_Character_Name;
-        heroInfoPanel.heroDesText.text = "";
-        heroInfoPanel.rarityText.text = Utils.String_Color_Rarity(data.m_Rarity) + data.m_Rarity.ToString() + "</color>";
+        heroInfo.heroRarity.sprite = Utils.Get_Atlas(data.m_Rarity.ToString());
+        heroInfo.heroIcon.sprite = Utils.Get_Atlas(data.name);
+        heroInfo.heroNameText.text = data.m_Character_Name;
+        heroInfo.heroDesText.text = "";
+        heroInfo.rarityText.text = Utils.String_Color_Rarity(data.m_Rarity) + data.m_Rarity.ToString() + "</color>";
 
-        heroInfoPanel.fightScoreText.text = "";
-        heroInfoPanel.ATKScoreText.text = StringMethod.ToCurrencyString(BaseManager.Player.Get_ATK(data.m_Rarity, hero));
-        heroInfoPanel.HpScoreText.text = StringMethod.ToCurrencyString(BaseManager.Player.Get_HP(data.m_Rarity, hero));
+        heroInfo.fightScoreText.text = StringMethod.ToCurrencyString(BaseManager.Player.Get_FightScore()); ;
+        heroInfo.ATKScoreText.text = StringMethod.ToCurrencyString(BaseManager.Player.Get_ATK(data.m_Rarity, heroinfo));
+        heroInfo.HpScoreText.text = StringMethod.ToCurrencyString(BaseManager.Player.Get_HP(data.m_Rarity, heroinfo));
 
-        heroInfoPanel.heroLevelText.text = "Lv."+(BaseManager.Data.Infos[data.name].Level +1).ToString();
-        heroInfoPanel.heroCountText.text = "("+BaseManager.Data.Infos[data.name].Count.ToString()+"/" + LevelUpCount.ToString()+")";
-        heroInfoPanel.sliderFill.fillAmount = (float)BaseManager.Data.Infos[data.name].Count / LevelUpCount;
+        heroInfo.heroLevelText.text = "Lv."+(BaseManager.Data.HeroInfos[data.name].Level +1).ToString();
+        heroInfo.heroCountText.text = "("+BaseManager.Data.HeroInfos[data.name].Count.ToString()+"/" + LevelUpCount.ToString()+")";
+        heroInfo.sliderFill.fillAmount = (float)BaseManager.Data.HeroInfos[data.name].Count / LevelUpCount;
 
-        heroInfoPanel.upgrade.onClick.RemoveAllListeners();
-        heroInfoPanel.upgrade.onClick.AddListener(() => UpgradeButton(hero));
-
-
-        Debug.Log("HeroInfos : " + BaseManager.Data.HeroInfos[data.name].info.Level + "/" + BaseManager.Data.HeroInfos[data.name].info.Count);
-        Debug.Log("Infos : " + BaseManager.Data.Infos[data.name].Level + "/" + BaseManager.Data.Infos[data.name].Count);
+        heroInfo.upgrade.onClick.RemoveAllListeners();
+        heroInfo.upgrade.onClick.AddListener(() => UpgradeButton(data));
     }
 
     public override void DisableOBJ()

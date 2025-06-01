@@ -20,14 +20,14 @@ public class HeroSpawner : MonoBehaviour
 
     private void SetHero()
     {
-        for(int i = 0; i < BaseManager.Hero.SetHeroInfos.Length; i++)
+        for(int i = 0; i < BaseManager.Data.SetHeroData.Length; i++)
         {
-            var data = BaseManager.Hero.SetHeroInfos[i];
+            var data = BaseManager.Data.SetHeroData[i];
             if (data != null)
             {
                 if (players[i] != null)
                 {
-                    if (players[i].P_Data != data.Data)
+                    if (players[i].P_Data != data)
                     {
                         Destroy(players[i].gameObject);
                         players[i] = null;
@@ -43,9 +43,9 @@ public class HeroSpawner : MonoBehaviour
         }
     }
 
-    private void MakeHero(HeroInfo data, int value)
+    private void MakeHero(Hero_Scriptable data, int value)
     {
-        string temp = data.Data.m_Character_Name;
+        string temp = data.m_Character_Name;
         GameObject go = Instantiate(Resources.Load<GameObject>("Hero/" + temp));
         players[value] = go.GetComponent<Player>();
 

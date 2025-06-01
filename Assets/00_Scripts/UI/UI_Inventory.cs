@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,13 +16,18 @@ public class UI_Inventory : BaseUI
     [SerializeField] Transform content;
     [SerializeField] UI_Inventory_Part part;
 
+    [SerializeField] TextMeshProUGUI moneyText;
+
     public override bool Init()
     {
-        var sort_Dictionary = BaseManager.Inventory.ItemList.OrderByDescending(x => x.Value.data.ItemRarity);
+        var sort_Dictionary = BaseManager.Data.ItemData.OrderByDescending(x => x.Value.ItemRarity);
 
         foreach (var item in sort_Dictionary)
         {
-            Instantiate(part, content).Init(item.Value);                        
+            if (BaseManager.Data.ItemInfos[item.Key].Count > 0)
+            {
+                Instantiate(part, content).Init(item.Key);
+            }
         }
 
         for(int i = 0; i < m_TopButtons.Length; i++)
@@ -29,6 +35,8 @@ public class UI_Inventory : BaseUI
             int index = i;
             m_TopButtons[i].onClick.AddListener(() => ItemInventory_Check((InventoryState)index));
         }
+
+        moneyText.text = StringMethod.ToCurrencyString(DataManager.gameData.Money);
 
         return base.Init();
 

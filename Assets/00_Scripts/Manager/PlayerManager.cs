@@ -83,10 +83,10 @@ public class PlayerManager
         return Utils.CalculatedValue(Utils.DesignData.levelData.B_HP,DataManager.gameData.Level, Utils.DesignData.levelData.C_HP);
     }
 
-    public double Get_ATK(Rarity rarity, HeroInfo hero)
+    public double Get_ATK(Rarity rarity, Info info)
     {
         double Base = ATK * ((int)rarity + 1);
-        int baseLevel = (hero.info.Level + 1);
+        int baseLevel = (info.Level + 1);
 
         float Level = (baseLevel * 10) / 100;
         double Damege = Base + (Base * Level);
@@ -94,10 +94,10 @@ public class PlayerManager
         return Damege;
     }
 
-    public double Get_HP(Rarity rarity, HeroInfo hero)
+    public double Get_HP(Rarity rarity, Info info)
     {
         double Base = HP * ((int)rarity + 1);
-        int baseLevel = (hero.info.Level + 1);
+        int baseLevel = (info.Level + 1);
 
         float Level = (baseLevel * 10) / 100;
         double hp = Base + (Base * Level);

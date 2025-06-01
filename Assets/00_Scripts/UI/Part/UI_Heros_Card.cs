@@ -28,10 +28,10 @@ public class UI_Heros_Card : MonoBehaviour
         m_parent = parentBase;
         m_hero = data;
         
-        int levelCount = (BaseManager.Data.Infos[data.m_Character_Name].Level+1) * 5;
-        m_slider.fillAmount = (float)BaseManager.Data.Infos[data.m_Character_Name].Count / (float)levelCount;
-        m_Count.text = BaseManager.Data.Infos[data.m_Character_Name].Count.ToString() + " / " + levelCount.ToString();
-        m_Level.text = "Lv." + (BaseManager.Data.Infos[data.m_Character_Name].Level+1).ToString();
+        int levelCount = BaseManager.Hero.LevelMaxCount(BaseManager.Data.HeroInfos[data.m_Character_Name]);
+        m_slider.fillAmount = (float)BaseManager.Data.HeroInfos[data.m_Character_Name].Count / (float)levelCount;
+        m_Count.text = BaseManager.Data.HeroInfos[data.m_Character_Name].Count.ToString() + " / " + levelCount.ToString();
+        m_Level.text = "Lv." + (BaseManager.Data.HeroInfos[data.m_Character_Name].Level+1).ToString();
 
         m_character.sprite = Utils.Get_Atlas(data.m_Character_Name);
         m_rarity.sprite = Utils.Get_Atlas(data.m_Rarity.ToString());
@@ -45,10 +45,10 @@ public class UI_Heros_Card : MonoBehaviour
 
     public void TextCheck()
     {
-        int levelCount = (BaseManager.Data.Infos[m_hero.m_Character_Name].Level + 1) * 5;
-        m_slider.fillAmount = (float)BaseManager.Data.Infos[m_hero.m_Character_Name].Count / (float)levelCount;
-        m_Count.text = BaseManager.Data.Infos[m_hero.m_Character_Name].Count.ToString() + " / " + levelCount.ToString();
-        m_Level.text = "Lv." + (BaseManager.Data.Infos[m_hero.m_Character_Name].Level + 1).ToString();
+        int levelCount = BaseManager.Hero.LevelMaxCount(BaseManager.Data.HeroInfos[m_hero.m_Character_Name]);
+        m_slider.fillAmount = (float)BaseManager.Data.HeroInfos[m_hero.m_Character_Name].Count / (float)levelCount;
+        m_Count.text = BaseManager.Data.HeroInfos[m_hero.m_Character_Name].Count.ToString() + " / " + levelCount.ToString();
+        m_Level.text = "Lv." + (BaseManager.Data.HeroInfos[m_hero.m_Character_Name].Level + 1).ToString();
     }
     public void EffectStart()
     {
@@ -57,11 +57,11 @@ public class UI_Heros_Card : MonoBehaviour
     public void GetHeroCheck()
     {
         bool isGet = false;
-        for (int i = 0; i < BaseManager.Hero.SetHeroInfos.Length; i++)
+        for (int i = 0; i < BaseManager.Data.SetHeroData.Length; i++)
         {
-            if (BaseManager.Hero.SetHeroInfos[i] != null)
+            if (BaseManager.Data.SetHeroData[i] != null)
             {
-                if (BaseManager.Hero.SetHeroInfos[i].Data == m_hero)
+                if (BaseManager.Data.SetHeroData[i] == m_hero)
                 {
                     isGet = true;
                 }
@@ -77,7 +77,6 @@ public class UI_Heros_Card : MonoBehaviour
         RenderManager.instance.Hero.GetParticle(true);
         m_parent.SetClick(this);        
     }
-
 
     public void OnClickHeroCard()
     {

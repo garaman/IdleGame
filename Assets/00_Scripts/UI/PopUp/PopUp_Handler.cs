@@ -5,9 +5,9 @@ using UnityEngine.EventSystems;
 
 public class PopUp_Handler : MonoBehaviour, IPointerDownHandler
 {
-    private ItemScriptable item;
+    private Item_Scriptable item;
 
-    public void Init(ItemScriptable itemData)
+    public void Init(Item_Scriptable itemData)
     {
         item = itemData;
     }

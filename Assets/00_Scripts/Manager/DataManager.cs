@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,12 +18,9 @@ public class GameData
 
     // Shop 관련 정보.    
     public int HeroSummon_Count = 0; // 소환 횟수.
-}
 
-public class HeroInfo
-{
-    public Hero_Scriptable Data;
-    public Info info;
+    public string startDate;
+    public string endDate;
 }
 
 public class Info
@@ -35,30 +32,35 @@ public class Info
 public class DataManager
 {
     public static GameData gameData = new GameData();
-    public Dictionary<string, Info> Infos = new Dictionary<string, Info>(); // 유저 정보.
+    public Dictionary<string, Info> HeroInfos = new Dictionary<string, Info>(); // 유저 정보.
+    public Dictionary<string, Info> ItemInfos = new Dictionary<string, Info>(); // 아이템 정보.
+        
+    public Dictionary<string, Hero_Scriptable> HeroData = new Dictionary<string, Hero_Scriptable>(); // 전체 영웅 정보.
+    public Dictionary<string, Item_Scriptable> ItemData = new Dictionary<string, Item_Scriptable>(); // 전체 아이템 정보.
 
+    
+    public Hero_Scriptable[] SetHeroData = new Hero_Scriptable[6]; // 사용중인 영웅 정보.
+    public Item_Scriptable[] SetItemData = new Item_Scriptable[6]; // 사용중인 유물 정보.
 
-    // 전체 영웅 정보.
-    public Dictionary<string, HeroInfo> HeroInfos = new Dictionary<string, HeroInfo>();
 
     public void Init()
     {
         SetHeroInfo();
-        CheckInfo();
+        SetItemInfo();;
     }
 
     public Hero_Scriptable Get_Rarity_Hero(Rarity rarity)
     {
         List<Hero_Scriptable> list= new List<Hero_Scriptable>();
 
-        foreach (var hero in HeroInfos.Values)
+        foreach (var hero in HeroData.Values)
         {
-            if (hero.Data.m_Rarity == rarity)
+            if (hero.m_Rarity == rarity)
             {
-                list.Add(hero.Data);
+                list.Add(hero);
             }
-        }
-        return list[Random.Range(0,list.Count)];
+        }        
+        return list[UnityEngine.Random.Range(0,list.Count)];
     }
 
     public void SetHeroInfo()
@@ -68,29 +70,44 @@ public class DataManager
         foreach (var data in datas)
         {
             Info h_info = new Info();
-            if (Infos.ContainsKey(data.name))
+            if (HeroInfos.ContainsKey(data.name))
             {
-                h_info = Infos[data.name]; // 기존 정보가 있다면 가져옴.
+                h_info = HeroInfos[data.name]; // 기존 정보가 있다면 가져옴.
             }
             else
             {
-                Infos.Add(data.name, h_info); // 없다면 새로 추가.
+                HeroInfos.Add(data.name, h_info); // 없다면 새로 추가.
             }
 
-            var hero = new HeroInfo();
-            hero.Data = data;
-            hero.info = h_info;
-
-            HeroInfos.Add(data.name, hero);
+            if (!HeroData.ContainsKey(data.name))
+            {
+                HeroData.Add(data.name, data);
+            }
         }
     }
 
-    public void CheckInfo()
+    public void SetItemInfo()
     {
-        foreach (var hero in HeroInfos)
+        var datas = Resources.LoadAll<Item_Scriptable>("Scriptable/Item");
+
+        foreach (var data in datas)
         {
-            hero.Value.info = Infos[hero.Value.Data.name];
+            Info I_info = new Info();
+            if (ItemInfos.ContainsKey(data.name))
+            {
+                I_info = ItemInfos[data.name]; // 기존 정보가 있다면 가져옴.
+            }
+            else
+            {
+                ItemInfos.Add(data.name, I_info); // 없다면 새로 추가.
+            }
+
+            if (!ItemData.ContainsKey(data.name))
+            {
+                ItemData.Add(data.name, data);
+            }
         }
     }
+
 }
 

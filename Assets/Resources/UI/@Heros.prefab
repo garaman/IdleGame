@@ -1106,7 +1106,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Content: {fileID: 7430867593813450248}
   Card: {fileID: 8050152370278097951, guid: 7f5f12548e71efc4885241b735a22016, type: 3}
-  AllEffect: {fileID: 0}
   heroInfoPanel: {fileID: 920641867680817364}
 --- !u!1 &4959559382430686359
 GameObject:

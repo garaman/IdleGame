@@ -43,6 +43,20 @@ public class Utils
         return "<color=#FFFFFF>";
     }
 
+    public static Color Color_Rarity(Rarity rare)
+    {
+        switch (rare)
+        {
+            case Rarity.Common: return Color.gray;
+            case Rarity.UnCommon: return Color.green;
+            case Rarity.Rare: return Color.blue;
+            case Rarity.Hero: return Color.magenta;
+            case Rarity.Legendary: return Color.yellow;
+        }
+
+        return Color.white;
+    }
+
     public static double CalculatedValue(float baseValue, int level, float value)
     {
         return baseValue * Mathf.Pow((level+1), value);
@@ -99,5 +113,20 @@ public class Utils
             valueCount[i] = float.Parse(CSV_Importer.SummonDesign[value][rarity].ToString());
         }
         return valueCount;
+    }
+
+    public static double TimerCheck()
+    {
+        if(DataManager.gameData.startDate == "" || DataManager.gameData.endDate == "")
+        {
+            return 0.0d;
+        }
+        DateTime startDate = DateTime.Parse(DataManager.gameData.startDate);
+        DateTime endDate = DateTime.Parse(DataManager.gameData.endDate);
+
+        TimeSpan tiemr = startDate - endDate;
+        double timeCount = tiemr.TotalSeconds;
+
+        return timeCount;
     }
 }

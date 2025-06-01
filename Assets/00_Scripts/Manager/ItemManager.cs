@@ -1,40 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
-public class Item
-{
-    public ItemScriptable data;
-    public int count;
-}
 
 public class ItemManager 
 {
-    Dictionary<string, ItemScriptable> ItemDatas = new Dictionary<string, ItemScriptable>();
-
-    public void Init()
+    public List<Item_Scriptable> GetDropSet()
     {
-        var datas= Resources.LoadAll<ItemScriptable>("Scriptable/Item");
-        
-        for(int i = 0; i < datas.Length; i++)
-        {
-            ItemDatas.Add(datas[i].name, datas[i]);            
-        }
-    }
+        List<Item_Scriptable> dropSet = new List<Item_Scriptable>();
 
-    public List<ItemScriptable> GetDropSet()
-    {
-        List<ItemScriptable> dropSet = new List<ItemScriptable>();
-
-        foreach (var item in ItemDatas)
+        foreach (var item in BaseManager.Data.ItemData)
         {
-            float valueCount = Random.Range(0f, 100.0f);
-            if (valueCount <= item.Value.ItemChance)
+            if(item.Value.ItemType == ItemType.Consumable)
             {
-                dropSet.Add(item.Value);
-            }
+                float valueCount = Random.Range(0f, 100.0f);
+                if (valueCount <= item.Value.ItemChance)
+                {
+                    dropSet.Add(item.Value);
+                }
+            }            
         }
 
         return dropSet;
+    }
+
+    public void GetItem(int value, string itemName)
+    {
+        BaseManager.Data.SetItemData[value] = BaseManager.Data.ItemData[itemName];
+    }
+
+    public void DisableItem(int value)
+    {
+        BaseManager.Data.SetItemData[value] = null;
+    }
+
+    public int LevelMaxCount(Info info)
+    {
+        return (info.Level + 1) * 5;
     }
 }

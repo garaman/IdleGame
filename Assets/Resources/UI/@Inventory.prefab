@@ -623,7 +623,7 @@ GameObject:
   - component: {fileID: 4926400041826022576}
   - component: {fileID: 344806158719653771}
   m_Layer: 5
-  m_Name: Image
+  m_Name: BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -699,7 +699,7 @@ GameObject:
   - component: {fileID: 4790825419757873437}
   - component: {fileID: 1293356681827267027}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: MoneyText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1813,7 +1813,7 @@ GameObject:
   - component: {fileID: 6108294955299232719}
   - component: {fileID: 2166076971033431553}
   m_Layer: 5
-  m_Name: Coin
+  m_Name: Money
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2127,3 +2127,4 @@ MonoBehaviour:
   - {fileID: 547625744179355625}
   content: {fileID: 6714743855395248970}
   part: {fileID: 1328539094066985259, guid: 806f146b047fdb2429b8e0cc83caa3dc, type: 3}
+  moneyText: {fileID: 1293356681827267027}

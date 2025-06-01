@@ -25,11 +25,11 @@ public class RenderHero : MonoBehaviour
         }
         HeroOBJ.Clear();
 
-        for (int i = 0; i < BaseManager.Hero.SetHeroInfos.Length; i++)
+        for (int i = 0; i < BaseManager.Data.SetHeroData.Length; i++)
         {
-            if (BaseManager.Hero.SetHeroInfos[i] != null)
+            if (BaseManager.Data.SetHeroData[i] != null)
             {                
-                string temp = BaseManager.Hero.SetHeroInfos[i].Data.m_Character_Name;
+                string temp = BaseManager.Data.SetHeroData[i].m_Character_Name;
                 var go = Instantiate(Resources.Load<GameObject>("Hero/" + temp));
                 HeroOBJ.Add(go);
 

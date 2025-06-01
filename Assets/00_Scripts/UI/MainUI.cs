@@ -248,13 +248,13 @@ public class MainUI : MonoBehaviour
         }
 
         int indexValue = 0;
-        for (int i = 0; i < BaseManager.Hero.SetHeroInfos.Length; i++)
+        for (int i = 0; i < BaseManager.Data.SetHeroData.Length; i++)
         {
-            var data = BaseManager.Hero.SetHeroInfos[i];
+            var data = BaseManager.Data.SetHeroData[i];
             if(data != null)
             {
                 indexValue++;
-                main_Parts[i].InitData(data.Data, false);
+                main_Parts[i].InitData(data, false);
                 main_Parts[i].transform.SetSiblingIndex(indexValue);
                 m_Parts.Add(HeroSpawner.players[i], main_Parts[i]);
             }
@@ -264,13 +264,13 @@ public class MainUI : MonoBehaviour
     public void SetHeroData()
     {
         int indexValue = 0;
-        for (int i = 0; i < BaseManager.Hero.SetHeroInfos.Length; i++)
+        for (int i = 0; i < BaseManager.Data.SetHeroData.Length; i++)
         {
-            var data = BaseManager.Hero.SetHeroInfos[i];
+            var data = BaseManager.Data.SetHeroData[i];
             if (data != null)
             {
                 indexValue++;
-                main_Parts[i].InitData(data.Data, true);
+                main_Parts[i].InitData(data, true);
                 main_Parts[i].transform.SetSiblingIndex(indexValue);
             }
         }
@@ -412,7 +412,7 @@ public class MainUI : MonoBehaviour
         m_BossSlider_Text.text = string.Format("{0:0.0}", value * 100.0f) + "%";
     }
 
-    public void GetLegendaryPopUp(ItemScriptable item)
+    public void GetLegendaryPopUp(Item_Scriptable item)
     {
         if (isPopup)
         {
@@ -440,7 +440,7 @@ public class MainUI : MonoBehaviour
         m_LagendaryPopUp.SetTrigger("isCLOSE");
     }
 
-    public void GetItem(ItemScriptable item)
+    public void GetItem(Item_Scriptable item)
     {
         bool AllActive = true;
         for (int i = 0; i < m_ItemTexts.Count; i++)

@@ -80,7 +80,7 @@ public class Ui_Gacha : BaseUI
             // 뽑기 완료된 영웅 정보 결정.
             Hero_Scriptable hero = BaseManager.Data.Get_Rarity_Hero(rarity);
 
-            BaseManager.Data.Infos[hero.name].Count++; // count 증가.
+            BaseManager.Data.HeroInfos[hero.name].Count++; // count 증가.
             DataManager.gameData.HeroSummon_Count++; // 소환 횟수 증가.
 
             go.sprite = Utils.Get_Atlas(rarity.ToString());

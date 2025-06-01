@@ -2374,7 +2374,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC7A5\uBE44"
+  m_text: "\uC720\uBB3C"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c0b1379eeda944e4b83b9ad76116c8a1, type: 2}
   m_sharedMaterial: {fileID: -2181631144278490793, guid: c0b1379eeda944e4b83b9ad76116c8a1, type: 2}
@@ -12672,7 +12672,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 18, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 30}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1598282032
@@ -13555,7 +13555,7 @@ GameObject:
   - component: {fileID: 1646680726}
   - component: {fileID: 1646680725}
   m_Layer: 5
-  m_Name: EquipmentBottomLayout
+  m_Name: RelicBottomLayout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16195,6 +16195,7 @@ MonoBehaviour:
   LAYER: {fileID: 241557012}
   BACKLAYER: {fileID: 1260456529}
   Hero_Button: {fileID: 61731333}
+  Relic_Button: {fileID: 1646680725}
   Shop_Button: {fileID: 714963871}
   Inventory_Button: {fileID: 2098401390}
   SavingMode_Button: {fileID: 718874816}
