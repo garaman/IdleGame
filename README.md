@@ -31,23 +31,6 @@
 
 ## 🧩 프로젝트 구조
 
-\`\`\`
-IdleGame/
-├── Assets/
-│   ├── Scripts/
-│   │   ├── Battle/
-│   │   │   └── BattleManager.cs
-│   │   ├── Hero/
-│   │   │   ├── HeroSummonSystem.cs
-│   │   │   └── HeroAutoSkill.cs
-│   │   └── UI/
-│   │       └── RewardPopup.cs
-├── CodeSamples/
-│   └── HeroAutoSkill.cs
-├── Docs/
-│   └── Architecture.txt
-└── README.md
-\`\`\`
 
 ## 📸 스크린샷
 
