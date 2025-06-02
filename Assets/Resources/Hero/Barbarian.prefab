@@ -926,10 +926,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 0
+  MaxHP: 0
   ATK: 0
   ATK_Speed: 0
   isDead: 0
   isGetSkill: 0
+  NonAttackSkill: 0
   m_BulletTransform: {fileID: 0}
   P_Data: {fileID: 0}
   Provocation_Effect: {fileID: 2981676064123155599}
@@ -950,7 +952,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SkillParticle: {fileID: 693423036612294991}
-  skillEffect: {fileID: 693423036612294991}
 --- !u!1 &5306276515385368011
 GameObject:
   m_ObjectHideFlags: 0

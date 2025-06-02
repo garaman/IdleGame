@@ -11,8 +11,6 @@ public class Spawner : MonoBehaviour
     public static List<Monster> m_Monsters = new List<Monster>();
     public static List<Player> m_Players = new List<Player>();
 
-    Coroutine coroutine;
-
     private void Start()
     {
         StageManager.m_ReadyEvent += OnReady;
@@ -28,18 +26,16 @@ public class Spawner : MonoBehaviour
     }
     public void OnPlay()
     {
-        coroutine = StartCoroutine(SpawnCoroutine());
+        StopAllCoroutines();
+        StartCoroutine(SpawnCoroutine());
     }
     public void OnBoss()
     {
-        if (coroutine != null)
+        StopAllCoroutines();
+
+        for (int i = 0; i < m_Monsters.Count; i++)
         {
-            StopCoroutine(coroutine);
-            coroutine = null;
-        }
-        for(int i = 0; i < m_Monsters.Count; i++)
-        {
-            BaseManager.Pool.m_pool_Dictionary["Monster"].Return(m_Monsters[i].gameObject);            
+            BaseManager.Pool.m_pool_Dictionary["Monster"].Return(m_Monsters[i].gameObject);
         }
         m_Monsters.Clear();
 
@@ -109,7 +105,7 @@ public class Spawner : MonoBehaviour
 
         yield return new WaitForSeconds(m_SpawnTime);
 
-        coroutine = StartCoroutine(SpawnCoroutine());
+        StartCoroutine(SpawnCoroutine());
     }
 
 }

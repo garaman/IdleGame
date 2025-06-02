@@ -21,7 +21,9 @@ public class M_LightningThunder : BaseSkill
         for (int i = 0; i < m_SkillCount; i++)
         {
             Player player = players[Random.Range(0,players.Length)];
-            
+
+            if(player == null || player.isDead) { continue; }
+
             Instantiate(Resources.Load("PoolOBJ/Skill/M_LightningThunder"), player.transform.position, Quaternion.identity);
 
             CameraManager.instance.CameraShake();

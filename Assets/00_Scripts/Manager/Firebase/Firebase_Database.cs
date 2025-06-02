@@ -7,12 +7,6 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class User
-{
-    public string userName;
-    public int Stage;
-}
-
 public partial class FirebaseManager
 {
     

@@ -1,9 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using static UnityEditor.IMGUI.Controls.PrimitiveBoundsHandle;
-using static UnityEngine.GraphicsBuffer;
-using static UnityEngine.RuleTile.TilingRuleOutput;
+using UnityEngine; 
 
 public class RelicManager
 { 
@@ -35,6 +32,8 @@ public class RelicManager
 
     public void Axe(Player player, Monster monster)
     {
+        if(monster == null || monster.isDead) return; // 몬스터가 없거나 죽은 경우 리턴
+
         Info itemInfo = BaseManager.Data.ItemInfos["Axe"];
 
         float Axe = Mathf.Clamp01(0.2f + (itemInfo.Level) * 0.033f); // Axe 아이템의 레벨에 따른 확률 계산 0.2f + (레벨 * 0.033f)

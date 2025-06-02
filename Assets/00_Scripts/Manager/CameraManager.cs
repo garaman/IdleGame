@@ -54,6 +54,8 @@ public class CameraManager : MonoBehaviour
 
         foreach (var player in players)
         {
+            if (player == null) { continue; }
+
             float targetDistance = Vector3.Distance(Vector3.zero, player.transform.position) + Distance_Value;
             //Debug.Log(targetDistance);
 
