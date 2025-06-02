@@ -31,7 +31,8 @@ public class UI_Offline : BaseUI
         foreach(var item in items)
         {
             var go = Instantiate(ItemPart, Content);
-            go.Init(item.Key);
+            Item_Scriptable itemData = BaseManager.Data.ItemData[item.Key];
+            go.Init(itemData, item.Value.Count);
         }
 
         return base.Init();

@@ -26,7 +26,7 @@ public class HIT_TEXT : MonoBehaviour
     {
         UI_SavingMode.m_OnSving -= OnSave;
     }
-    public void Init(Vector3 pos, double damage,bool isCritical = false, bool isMonster = false , bool isHeal = false)
+    public void Init(Vector3 pos, double damage,bool isCritical = false, bool isMonster = false , bool isHeal = false, bool isRelic = false)
     {
         UI_SavingMode.m_OnSving += OnSave;
 
@@ -49,6 +49,10 @@ public class HIT_TEXT : MonoBehaviour
         else if (isHeal)
         {
             m_text.color = Color.green;
+        }
+        else if (isRelic)
+        {
+            m_text.color = Color.cyan;
         }
 
         BaseManager.instance.Return_Pool(3.0f, this.gameObject, "HIT_TEXT");

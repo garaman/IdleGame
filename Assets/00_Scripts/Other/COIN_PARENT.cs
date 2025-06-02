@@ -34,7 +34,7 @@ public class COIN_PARENT : MonoBehaviour
         UI_SavingMode.m_OnSving -= OnSave;        
     }
 
-    public void Init(Vector3 pos)
+    public void Init(Vector3 pos, float rate = 1.0f)
     {
         UI_SavingMode.m_OnSving += OnSave;
 
@@ -49,7 +49,7 @@ public class COIN_PARENT : MonoBehaviour
         }
         transform.SetParent(BaseCanvas.instance.HOLDER_LAYER(0));
 
-       DataManager.gameData.Money += Utils.DesignData.stageData.MONEY();
+       DataManager.gameData.Money += Utils.DesignData.stageData.MONEY() * rate;
 
         StartCoroutine(Coin_Effect());
     }

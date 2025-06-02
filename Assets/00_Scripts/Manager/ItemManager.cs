@@ -39,4 +39,18 @@ public class ItemManager
     {
         return (info.Level + 1) * 5;
     }
+
+    public bool SetItemCheck(string itemName)
+    {
+        for (int i = 0; i < BaseManager.Data.SetItemData.Length; i++)
+        {
+            if (BaseManager.Data.SetItemData[i] == null) { continue; } // null일 경우는 제외
+
+            if (BaseManager.Data.SetItemData[i].name == itemName)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }

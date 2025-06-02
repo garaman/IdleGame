@@ -175,12 +175,14 @@ public class Player : Character
             yield return null;
         }
     }
-    public override void GetDamage(double damage, bool isCritical = false)
+    public override void GetDamage(double damage, bool isCritical = false, bool isRelic = false)
     {
         if(StageManager.isDead == true) { return; }
 
         base.GetDamage(damage);
-        
+              
+        Delegate_Holder.PlayerDameged(this);
+
         GetMp(3.0f);
 
         if (HP <= 0)
@@ -206,10 +208,11 @@ public class Player : Character
     
 
     protected override void Attack()
-    {
+    {   
         base.Attack();
-        TrailObj.SetActive(true);
+        Delegate_Holder.PlayerAttack(this, m_Target.GetComponent<Monster>());
 
+        TrailObj.SetActive(true);
         Invoke("TrailDisable",1.0f);
     }
 

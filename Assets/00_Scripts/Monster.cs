@@ -81,7 +81,7 @@ public class Monster : Character
         });
     }
 
-    public override void GetDamage(double damage, bool isCritical)
+    public override void GetDamage(double damage, bool isCritical, bool isRelic = false)
     {
         bool critical = Critical(ref damage);
         base.GetDamage(damage, critical);
@@ -204,6 +204,9 @@ public class Monster : Character
             StopAllCoroutines();
             Spawner.m_Monsters.Remove(this);
             Destroy(this.gameObject);
-        }        
+        }     
+        
+        Delegate_Holder.MonsterDead(this); // 몬스터 사망시 유물 이벤트 호출
+
     }
 }

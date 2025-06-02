@@ -32,13 +32,13 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    public void Attack_Init(Transform target, double damage)
+    public void Attack_Init(Transform target, double damage, bool isRelic = false)
     {
         m_Target = target;
         transform.LookAt(m_Target);
         if (m_Target != null)
         {
-            m_Target.GetComponent<Character>().GetDamage(damage);
+            m_Target.GetComponent<Character>().GetDamage(damage, isRelic);
         }
 
         GetHit = true;

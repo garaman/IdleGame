@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Axe
   m_EditorClassIdentifier: 
   ItemName: "\uBC84\uC11C\uCEE4\uC758 \uB3C4\uB07C"
-  ItemDescription: "\uADFC\uC811\uACF5\uACA9\uC2DC {0}% \uCD94\uAC00 \uACF5\uACA9\uB825"
+  ItemDescription: "\uADFC\uC811\uACF5\uACA9\uC2DC {0}% \uCD94\uAC00 \uACF5\uACA9\uB825,
+    \uB354\uBE14 \uC5B4"
   ItemRarity: 2
   ItemType: 1
   ItemChance: 30

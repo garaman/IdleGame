@@ -29,7 +29,7 @@ public class CameraManager : MonoBehaviour
     [Range(0f, 10.0f)]
     [SerializeField] private float power;
 
-    float m_Distance = 4.0f;
+    float m_Distance = 6.0f;
     Vector3 OriginPos;
     bool isCameraShake = false;
     Camera cam;

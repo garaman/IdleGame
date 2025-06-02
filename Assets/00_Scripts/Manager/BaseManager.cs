@@ -17,6 +17,7 @@ public class BaseManager : MonoBehaviour
     private static InventoryManager s_inventory = new InventoryManager();
     private static ADSManager s_ADS = new ADSManager();
     private static FirebaseManager s_firebase = new FirebaseManager();
+    private static RelicManager s_relic = new RelicManager();
     public static PoolManager Pool { get { return s_pool; } }
     public static PlayerManager Player { get { return s_player; } }
     public static DataManager Data { get { return s_data; } }
@@ -25,6 +26,7 @@ public class BaseManager : MonoBehaviour
     public static InventoryManager Inventory { get { return s_inventory; } }
     public static ADSManager ADS { get { return s_ADS; } }
     public static FirebaseManager Firebase { get { return s_firebase; } }
+    public static RelicManager Relic { get { return s_relic; } }
     #endregion
 
     public static bool isFast = false;

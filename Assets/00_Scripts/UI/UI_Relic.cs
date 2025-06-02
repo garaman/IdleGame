@@ -37,12 +37,21 @@ public class UI_Relic : BaseUI
             Cards.Add(go);
             go.Initalize(data.Value, this);
         }
-        
+
+        for (int i = 0; i < RelicPanelOBJ.Length; i++)
+        {
+            int index = i;
+            RelicPanelOBJ[i].GetComponent<Button>().onClick.RemoveAllListeners();
+            RelicPanelOBJ[i].GetComponent<Button>().onClick.AddListener(() => SetItemButton(index));
+        }
+
         return base.Init();
     }
 
     public void SetItemButton(int value)
     {
+        if (RelicPanelOBJ[value].transform.GetChild(1).gameObject.activeSelf == true) { return; } // Lock이 true일 때는 클릭 불가
+
         BaseManager.Item.GetItem(value, m_Item.name);
         ItemInitalize();
     }
@@ -55,6 +64,10 @@ public class UI_Relic : BaseUI
         {
             Cards[i].GetItemCheck();
         }
+
+        Delegate_Holder.ClearEvents();
+        BaseManager.Relic.Init();
+
         GetRelicPanelCheck();
     }
 
@@ -163,5 +176,11 @@ public class UI_Relic : BaseUI
 
         RelicInfo.upgrade.onClick.RemoveAllListeners();
         //RelicInfo.upgrade.onClick.AddListener(() => UpgradeButton(data));
+    }
+
+    public override void DisableOBJ()
+    {
+        MainUI.instance.LayerCheck(-1);
+        base.DisableOBJ();
     }
 }

@@ -100,13 +100,13 @@ public class Character : MonoBehaviour
         });
     }
 
-    public virtual void GetDamage(double damage, bool isCritical = false)
+    public virtual void GetDamage(double damage, bool isCritical = false, bool isRelic = false)
     {
         if (isDead == true) { return; }
 
         BaseManager.Pool.Pooling_OBJ("HIT_TEXT").Get((value) =>
         {
-            value.GetComponent<HIT_TEXT>().Init(transform.position, damage, isCritical, (ch_Mode == CH_Mode.Player)?true:false);
+            value.GetComponent<HIT_TEXT>().Init(transform.position, damage, isCritical, (ch_Mode == CH_Mode.Player)?true:false, false, isRelic);
         });
 
         HP -= damage;
